@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <v-breadcrumb/>
+    <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <el-form
         :model="formData"
@@ -17,7 +17,8 @@
           <el-input v-model="formData.phone" placeholder="请输入手机号" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleCreateManager">保存</el-button
+          <el-button type="primary" @click="handleCreateManager"
+            >保存</el-button
           >
         </el-form-item>
       </el-form>

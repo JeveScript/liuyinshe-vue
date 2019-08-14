@@ -51,7 +51,8 @@ export default {
   },
   data() {
     return {
-      path: this.$route.path
+      path: this.$route.path,
+      filterRoutes: []
     };
   },
   created() {

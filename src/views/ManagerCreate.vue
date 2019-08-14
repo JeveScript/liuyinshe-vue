@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <v-breadcrumb/>
+    <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <el-form
         :model="formData"

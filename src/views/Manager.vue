@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <v-breadcrumb/>
+    <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <div class="mb-20">
         <el-button type="primary" @click="handleLinkManagerCreate"

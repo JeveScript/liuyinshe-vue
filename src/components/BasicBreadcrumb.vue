@@ -53,6 +53,14 @@ export default {
       if (breadcrumb.length) {
         return breadcrumb;
       }
+      console.log(
+        this.$route.matched
+          .filter(data => data.meta && data.meta.breadcrumb)
+          .map(data => ({
+            name: data.meta.breadcrumb.title,
+            to: { name: data.name }
+          }))
+      );
       return this.$route.matched
         .filter(data => data.meta && data.meta.breadcrumb)
         .map(data => ({

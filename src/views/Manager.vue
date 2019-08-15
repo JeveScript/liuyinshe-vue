@@ -8,7 +8,7 @@
         >
       </div>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="phone_number" label="账户"> </el-table-column>
+        <el-table-column prop="phone" label="账户"> </el-table-column>
         <el-table-column prop="name" label="姓名"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -30,6 +30,7 @@
 
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
+import managerService from "@/global/service/manager.js";
 
 export default {
   data() {
@@ -38,22 +39,30 @@ export default {
       tableData: [
         {
           id: 4,
-          phone_number: "13511111111",
+          phone: "13511111111",
           name: "Jax"
         },
         {
           id: 5,
-          phone_number: "13522222222",
+          phone: "13522222222",
           name: "Jeo",
           role: 2
         },
         {
           id: 6,
-          phone_number: "13533333333",
+          phone: "13533333333",
           name: "Jay"
         }
       ]
     };
+  },
+  created() {
+    managerService.list().then(res => {
+      console.log(res);
+      let manager = res.data;
+      this.tableData = manager;
+      console.log(manager);
+    });
   },
   methods: {
     handleLinkManagerCreate() {

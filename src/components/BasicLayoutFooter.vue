@@ -1,6 +1,6 @@
 <template>
   <footer class="footer-section">
-    Copyright © 2019 goujianweilai.com All Rights Reserved
+    Copyright © 2019 zakesi.com All Rights Reserved
   </footer>
 </template>
 

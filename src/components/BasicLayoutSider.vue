@@ -2,7 +2,7 @@
   <el-aside class="page-sider" :width="siderWidth">
     <div class="logo-section">
       <img class="logo-img" src="~@/assets/logo.png" alt="" />
-      <span v-if="!collapse">Vue Element Pro</span>
+      <span v-if="!collapse">留音社</span>
     </div>
     <Menu :collapse="collapse" />
   </el-aside>

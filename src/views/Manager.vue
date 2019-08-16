@@ -35,34 +35,20 @@ import managerService from "@/global/service/manager.js";
 export default {
   data() {
     return {
-      loading: false,
-      tableData: [
-        {
-          id: 4,
-          phone: "13511111111",
-          name: "Jax"
-        },
-        {
-          id: 5,
-          phone: "13522222222",
-          name: "Jeo",
-          role: 2
-        },
-        {
-          id: 6,
-          phone: "13533333333",
-          name: "Jay"
-        }
-      ]
+      loading: true,
+      tableData: []
     };
   },
   created() {
-    managerService.list().then(res => {
-      console.log(res);
-      let manager = res.data;
-      this.tableData = manager;
-      console.log(manager);
-    });
+    managerService
+      .list()
+      .then(res => {
+        let manager = res.data;
+        this.tableData = manager;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   },
   methods: {
     handleLinkManagerCreate() {
@@ -76,14 +62,16 @@ export default {
       });
     },
     handleDeleteManager(row, index) {
-      const { name } = row;
+      const { name, id } = row;
       this.$confirm(`此操作将永久删除该${name}管理员, 是否继续?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        this.$message.success("删除成功！");
-        this.tableData.splice(index, 1);
+        managerService.delete(id).then(() => {
+          this.$message.success("删除成功！");
+          this.tableData.splice(index, 1);
+        });
       });
     }
   },

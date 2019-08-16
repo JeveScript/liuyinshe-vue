@@ -10,6 +10,8 @@ const ManagerCreate = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/ManagerCreate.vue");
 const ManagerEdit = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/ManagerEdit.vue");
+const Payment = () =>
+  import(/* webpackChunkName: "Manager" */ "@/views/Payment.vue");
 const Home = () => import(/* webpackChunkName: "Home" */ "@/views/Home.vue");
 
 export default [
@@ -40,6 +42,21 @@ export default [
           nav: {
             icon: "el-icon-pie-chart",
             title: "概况"
+          }
+        }
+      },
+      {
+        path: "/payment",
+        name: "Payment",
+        component: Payment,
+        meta: {
+          breadcrumb: {
+            title: "收支",
+            replace: false
+          },
+          nav: {
+            icon: "el-icon-bank-card",
+            title: "收支"
           }
         }
       },

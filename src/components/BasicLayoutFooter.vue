@@ -1,7 +1,8 @@
 <template>
-  <footer class="footer-section">
+  <div></div>
+  <!-- <footer class="footer-section">
     Copyright © 2019 zakesi.com All Rights Reserved
-  </footer>
+  </footer> -->
 </template>
 
 <script>

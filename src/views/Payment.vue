@@ -31,7 +31,6 @@
           </div>
         </el-form>
       </div>
-
       <el-table class="mb-20" :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="姓名"> </el-table-column>
         <el-table-column prop="created_at" label="时间"> </el-table-column>

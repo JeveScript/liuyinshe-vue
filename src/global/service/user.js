@@ -5,8 +5,8 @@ const userService = {
   create: function(params) {
     return request.post(API.user, params);
   },
-  list: function() {
-    return request.get(API.user);
+  list: function(params) {
+    return request.get(API.user,params);
   },
   delete: function(id) {
     return request.delete(API.userItem(id));

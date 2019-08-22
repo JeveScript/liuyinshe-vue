@@ -5,13 +5,12 @@ const AccountLogin = () =>
 const Dashboard = () =>
   import(/* webpackChunkName: "Dashboard" */ "@/views/Dashboard.vue");
 const Manager = () =>
-  import(/* webpackChunkName: "article" */ "@/views/Manager.vue");
+  import(/* webpackChunkName: "Manager" */ "@/views/Manager.vue");
 const ManagerCreate = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/ManagerCreate.vue");
 const ManagerEdit = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/ManagerEdit.vue");
-const User = () =>
-  import(/* webpackChunkName: "User" */ "@/views/User.vue");
+const User = () => import(/* webpackChunkName: "User" */ "@/views/User.vue");
 const UserCreate = () =>
   import(/* webpackChunkName: "User" */ "@/views/UserCreate.vue");
 const UserEdit = () =>
@@ -19,15 +18,21 @@ const UserEdit = () =>
 const UserItem = () =>
   import(/* webpackChunkName: "User" */ "@/views/UserItem.vue");
 const Payment = () =>
-  import(/* webpackChunkName: "Manager" */ "@/views/Payment.vue");
+  import(/* webpackChunkName: "Payment" */ "@/views/Payment.vue");
 const Home = () => import(/* webpackChunkName: "Home" */ "@/views/Home.vue");
 const Course = () =>
-  import(/* webpackChunkName: "article" */ "@/views/Course.vue");
+  import(/* webpackChunkName: "Course" */ "@/views/Course.vue");
 const CourseCreate = () =>
   import(/* webpackChunkName: "Course" */ "@/views/CourseCreate.vue");
 const CourseEdit = () =>
   import(/* webpackChunkName: "Course" */ "@/views/CourseEdit.vue");
-
+const Class = () => import(/* webpackChunkName: "Class" */ "@/views/Class.vue");
+const ClassCreate = () =>
+  import(/* webpackChunkName: "Class" */ "@/views/ClassCreate.vue");
+const ClassEdit = () =>
+  import(/* webpackChunkName: "Class" */ "@/views/ClassEdit.vue");
+const ClassItem = () =>
+  import(/* webpackChunkName: "Class" */ "@/views/ClassItem.vue");
 export default [
   {
     path: "/",
@@ -81,7 +86,7 @@ export default [
             meta: {
               breadcrumb: {
                 title: "所有学员"
-              },
+              }
             }
           },
           {
@@ -91,7 +96,7 @@ export default [
             meta: {
               breadcrumb: {
                 title: "新建"
-              },
+              }
             }
           },
           {
@@ -168,6 +173,63 @@ export default [
             meta: {
               breadcrumb: {
                 title: "详情"
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: "/admin/class",
+        name: "ClassRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "Class" },
+        meta: {
+          nav: {
+            icon: "el-icon-c-scale-to-original",
+            title: "班级"
+          },
+          breadcrumb: {
+            title: "班级"
+          }
+        },
+        children: [
+          {
+            path: "/admin/class",
+            name: "Class",
+            component: Class,
+            meta: {
+              breadcrumb: {
+                title: "所有班级"
+              }
+            }
+          },
+          {
+            path: "/admin/class/create",
+            name: "ClassCreate",
+            component: ClassCreate,
+            meta: {
+              breadcrumb: {
+                title: "新建"
+              }
+            }
+          },
+          {
+            path: "/admin/class/:id",
+            name: "ClassItem",
+            component: ClassItem,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          },
+          {
+            path: "/admin/class/:id/edit",
+            name: "ClassEdit",
+            component: ClassEdit,
+            meta: {
+              breadcrumb: {
+                title: "编辑"
               }
             }
           }

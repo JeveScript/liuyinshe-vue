@@ -27,7 +27,7 @@
             type="textarea"
             :rows="4"
             v-model="formData.description"
-            placeholder="请输入课程秒速"
+            placeholder="请输入课程描述"
           />
         </el-form-item>
         <el-form-item>

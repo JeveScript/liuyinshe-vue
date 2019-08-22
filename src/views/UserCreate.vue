@@ -21,20 +21,35 @@
         </el-form-item>
         <el-form-item label="生日" prop="birthday" style="width:460px;">
           <el-date-picker
-            v-model="formData.birthday" 
+            v-model="formData.birthday"
             value-format="yyyy-MM-dd"
             type="date"
-            placeholder="选择日期">
+            placeholder="选择日期"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="手机号" prop="phone" style="width:460px;">
           <el-input v-model="formData.phone" placeholder="请输入手机号" />
         </el-form-item>
-        <el-form-item label="紧急联系人姓名" prop="sms_name" style="width:460px;">
-          <el-input v-model="formData.sms_name" placeholder="请输入紧急联系人姓名" />
+        <el-form-item
+          label="紧急联系人姓名"
+          prop="sms_name"
+          style="width:460px;"
+        >
+          <el-input
+            v-model="formData.sms_name"
+            placeholder="请输入紧急联系人姓名"
+          />
         </el-form-item>
-        <el-form-item label="紧急联系人电话" prop="sms_phone" style="width:460px;">
-          <el-input v-model="formData.sms_phone" placeholder="请输入紧急联系人手机号" />
+        <el-form-item
+          label="紧急联系人电话"
+          prop="sms_phone"
+          style="width:460px;"
+        >
+          <el-input
+            v-model="formData.sms_phone"
+            placeholder="请输入紧急联系人手机号"
+          />
         </el-form-item>
         <el-form-item>
           <el-button
@@ -69,8 +84,12 @@ export default {
           }
         ],
         sex: [{ required: true, message: "请输入性别", trigger: "blur" }],
-        birthday: [{ required: true, message: "请输入出生年月", trigger: "blur" }],
-        sms_name: [{ required: true, message: "请输入紧急联系人姓名", trigger: "blur" }],
+        birthday: [
+          { required: true, message: "请输入出生年月", trigger: "blur" }
+        ],
+        sms_name: [
+          { required: true, message: "请输入紧急联系人姓名", trigger: "blur" }
+        ],
         sms_phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
           {
@@ -78,7 +97,7 @@ export default {
             message: "目前只支持中国大陆的手机号码",
             trigger: "blur"
           }
-        ],
+        ]
       },
       formData: {
         name: "",
@@ -86,7 +105,7 @@ export default {
         sex: "",
         birthday: "",
         sms_name: "",
-        sms_phone: "",
+        sms_phone: ""
       }
     };
   },
@@ -100,7 +119,7 @@ export default {
             sex: this.formData.sex,
             birthday: this.formData.birthday,
             sms_name: this.formData.sms_name,
-            sms_phone: this.formData.sms_phone,
+            sms_phone: this.formData.sms_phone
           };
           this.disabled = true;
           userService

@@ -5,8 +5,8 @@ const courseService = {
   create: function(params) {
     return request.post(API.course, params);
   },
-  list: function() {
-    return request.get(API.course);
+  list: function(params) {
+    return request.get(API.course, params);
   },
   delete: function(id) {
     return request.delete(API.courseItem(id));

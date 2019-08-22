@@ -6,7 +6,7 @@ const userService = {
     return request.post(API.user, params);
   },
   list: function(params) {
-    return request.get(API.user,params);
+    return request.get(API.user, params);
   },
   delete: function(id) {
     return request.delete(API.userItem(id));

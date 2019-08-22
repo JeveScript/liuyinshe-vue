@@ -5,29 +5,33 @@
       <el-tabs v-model="activeTabName">
         <el-tab-pane label="用户信息" name="userInfo">
           <div class="userInfo-section mb-20">
-            <el-form
-              ref="userForm"
-              label-position="left"
-              label-width="160px"
-            >
+            <el-form ref="userForm" label-position="left" label-width="160px">
               <h3>学员信息</h3>
               <el-form-item label="姓名" prop="sex" style="width:460px;">
-                {{formData.name}}
+                {{ formData.name }}
               </el-form-item>
               <el-form-item label="性别" prop="sex" style="width:460px;">
-                {{formData.sex === 1 ? '男' : '女'}}
+                {{ formData.sex === 1 ? "男" : "女" }}
               </el-form-item>
               <el-form-item label="生日" prop="birthday" style="width:460px;">
-                {{formData.birthday}}
+                {{ formData.birthday }}
               </el-form-item>
               <el-form-item label="手机号" prop="phone" style="width:460px;">
-                {{formData.phone}}
+                {{ formData.phone }}
               </el-form-item>
-              <el-form-item label="紧急联系人姓名" prop="sms_name" style="width:460px;">
-                {{formData.sms_name}}
+              <el-form-item
+                label="紧急联系人姓名"
+                prop="sms_name"
+                style="width:460px;"
+              >
+                {{ formData.sms_name }}
               </el-form-item>
-              <el-form-item label="紧急联系人电话" prop="sms_phone" style="width:460px;">
-                {{formData.sms_phone}}
+              <el-form-item
+                label="紧急联系人电话"
+                prop="sms_phone"
+                style="width:460px;"
+              >
+                {{ formData.sms_phone }}
               </el-form-item>
             </el-form>
           </div>
@@ -35,12 +39,10 @@
         <el-tab-pane label="用户班级" name="userClass">
           <div class="table-secton mb-20">
             <h3>所报班级</h3>
-            <el-table :data="classDatas"
-              class="mb-20"
-              style="width: 100%">
-                <el-table-column prop="name" label="班级名称"/>
-                <el-table-column prop="start_at" label="开班时间"/>
-                <el-table-column prop="end_at" label="结束时间"/>
+            <el-table :data="classDatas" class="mb-20" style="width: 100%">
+              <el-table-column prop="name" label="班级名称" />
+              <el-table-column prop="start_at" label="开班时间" />
+              <el-table-column prop="end_at" label="结束时间" />
             </el-table>
           </div>
         </el-tab-pane>
@@ -48,7 +50,8 @@
           <div class="payment-section">
             <h3>消费记录</h3>
             <el-table class="mb-20" :data="paymentDatas" style="width: 100%">
-              <el-table-column prop="created_at" label="时间"> </el-table-column>
+              <el-table-column prop="created_at" label="时间">
+              </el-table-column>
               <el-table-column prop="total" label="金额"></el-table-column>
               <el-table-column label="类型">
                 <template slot-scope="scope">
@@ -74,17 +77,17 @@ export default {
   data() {
     return {
       loading: false,
-      activeTabName: 'userInfo',
+      activeTabName: "userInfo",
       formData: {
         name: "",
         phone: "",
         sex: "",
         birthday: "",
         sms_name: "",
-        sms_phone: "",
+        sms_phone: ""
       },
       classDatas: [],
-      paymentDatas: [],
+      paymentDatas: []
     };
   },
   created() {
@@ -96,9 +99,7 @@ export default {
       this.formData = userInfo;
     });
   },
-  methods: {
-
-  },
+  methods: {},
   components: {
     "v-breadcrumb": Breadcrumb
   }

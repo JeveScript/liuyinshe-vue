@@ -3,14 +3,16 @@
     <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <div class="mb-20">
-        <el-button type="primary" plain
-            style="float:right;"
-            @click="handleLinkCreate"
+        <el-button
+          type="primary"
+          plain
+          style="float:right;"
+          @click="handleLinkCreate"
           >添加学员</el-button
         >
         <el-form label-position="right" inline label-width="80px">
           <el-form-item label="姓名：">
-             <el-input v-model="formData.name" placeholder="请输入姓名" />
+            <el-input v-model="formData.name" placeholder="请输入姓名" />
           </el-form-item>
           <el-form-item label="手机号">
             <el-input v-model="formData.phone" placeholder="请输入手机号" />
@@ -22,9 +24,7 @@
         </el-form>
       </div>
       <div class="table-secton">
-        <el-table :data="tableData"
-          class="mb-20"
-          style="width: 100%">
+        <el-table :data="tableData" class="mb-20" style="width: 100%">
           <el-table-column prop="name" label="姓名"> </el-table-column>
           <el-table-column prop="phone" label="电话"> </el-table-column>
           <el-table-column prop="sex" label="性别">
@@ -34,17 +34,19 @@
               >
             </template>
           </el-table-column>
-          <el-table-column prop="birthday" label="生日"/>
-          <el-table-column prop="sms_name" label="紧急联系人"/>
-          <el-table-column prop="sms_phone" label="紧急电话"/>
-          <el-table-column prop="balance" label="余额/元"/>
+          <el-table-column prop="birthday" label="生日" />
+          <el-table-column prop="sms_name" label="紧急联系人" />
+          <el-table-column prop="sms_phone" label="紧急电话" />
+          <el-table-column prop="balance" label="余额/元" />
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button type="text" @click="handleEdit(scope.row)"
                 >编辑</el-button
               >
               <el-divider direction="vertical"></el-divider>
-              <el-button type="text" @click="handleDetail(scope.row)">详情</el-button>
+              <el-button type="text" @click="handleDetail(scope.row)"
+                >详情</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -80,8 +82,8 @@ export default {
         pageSize: 10
       },
       formData: {
-        name: '',
-        phone: '',
+        name: "",
+        phone: ""
       }
     };
   },
@@ -94,7 +96,7 @@ export default {
         current_page: this.pagination.currentPage,
         page_size: this.pagination.pageSize,
         name: this.formData.name,
-        phone: this.formData.phone,
+        phone: this.formData.phone
       };
 
       userService

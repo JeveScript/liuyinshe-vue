@@ -5,8 +5,8 @@ const classService = {
   create: function(params) {
     return request.post(API.class, params);
   },
-  list: function() {
-    return request.get(API.class);
+  list: function(params) {
+    return request.get(API.class, params);
   },
   delete: function(id) {
     return request.delete(API.classItem(id));

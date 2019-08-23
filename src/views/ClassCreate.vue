@@ -56,7 +56,7 @@
           />
         </el-form-item>
         <el-form-item label="课时单价" style="width:460px;">
-          {{ formData.price / formData.lesson_count || 0 }} / 小节
+          {{ formData.price / formData.lesson_count || 0 }} 元 / 小节
         </el-form-item>
         <el-form-item label="描述" prop="description" style="width:460px;">
           <el-input
@@ -146,9 +146,10 @@ export default {
 
           classService
             .create(params)
-            .then(() => {
+            .then(res => {
+              let id = res.data.class_id;
               this.$message.success("创建成功");
-              this.$router.push({ name: "Class" });
+              this.$router.push({ name: "ClassEdit", params: { id } });
             })
             .finally(() => {
               this.disabled = false;

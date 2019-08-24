@@ -19,6 +19,9 @@ const classService = {
   },
   updateLesson: function(id, params) {
     return request.put(API.lessonItem(id), params);
+  },
+  addUser: function(id, params) {
+    return request.post(API.classAddUser(id), params);
   }
 };
 

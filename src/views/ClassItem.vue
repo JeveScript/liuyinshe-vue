@@ -3,8 +3,32 @@
     <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <el-card class="box-card mb-20">
-        <div slot="header" class="clearfix">
+        <div slot="header" class="clearfix mb-20">
           <span>报名学员</span>
+          <div style="float: right;">
+            <el-select
+              remote
+              filterable
+              v-model="user_id"
+              style="margin-right: 20px;"
+              :remote-method="remoteMethod"
+              :loading="searchLoading"
+              no-data-text="查无此用户"
+              placeholder="请输入姓名或手机号"
+            >
+              <el-option
+                v-for="item in searchUsers"
+                :key="item.value"
+                :label="item.name"
+                :value="item.id"
+                :disabled="hasSelectIds.includes(item.id)"
+              >
+              </el-option>
+            </el-select>
+            <el-button type="primary" plain @click="handleAddUser"
+              >添加</el-button
+            >
+          </div>
         </div>
         <el-table :data="users" class="mb-20" style="width: 100%">
           <el-table-column prop="name" label="姓名" />
@@ -92,19 +116,27 @@
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import classService from "@/global/service/class.js";
+import userService from "@/global/service/user.js";
 
 export default {
   data() {
     return {
       disabled: false,
       loading: false,
+      searchLoading: false,
       courses: [],
       lessons: [],
       users: [],
-      formData: {}
+      formData: {},
+      user_id: "",
+      searchUsers: []
     };
   },
-  computed: {},
+  computed: {
+    hasSelectIds() {
+      return this.users.map(data => data.id);
+    }
+  },
   created() {
     this.getClassInfo();
   },
@@ -120,6 +152,48 @@ export default {
     linkClassEdit() {
       let id = this.$route.params.id;
       this.$router.push({ name: "ClassEdit", params: { id } });
+    },
+    remoteMethod(value) {
+      let isName = isNaN(value);
+      let params = {};
+      if (isName) {
+        params.name = value;
+      } else {
+        params.phone = value;
+      }
+      this.searchLoading = true;
+      userService
+        .list(params)
+        .then(res => {
+          this.searchUsers = res.data.datas;
+        })
+        .finally(() => {
+          this.searchLoading = false;
+        });
+    },
+    handleAddUser() {
+      let id = this.$route.params.id;
+      let user_id = this.user_id;
+      if (!user_id) {
+        this.$message.error("请先选择用户！");
+        return;
+      }
+      this.loading = true;
+      classService
+        .addUser(id, { user_id })
+        .then(res => {
+          if (res.code === 200) {
+            this.user_id = "";
+            this.$message.success("添加成功！");
+            let user = this.searchUsers.find(data => data.id === user_id);
+            this.users.push(user);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   },
   components: {

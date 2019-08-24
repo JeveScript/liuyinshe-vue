@@ -33,6 +33,9 @@ const ClassEdit = () =>
   import(/* webpackChunkName: "Class" */ "@/views/ClassEdit.vue");
 const ClassItem = () =>
   import(/* webpackChunkName: "Class" */ "@/views/ClassItem.vue");
+const Lesson = () =>
+  import(/* webpackChunkName: "Class" */ "@/views/Lesson.vue");
+
 export default [
   {
     path: "/",
@@ -230,6 +233,16 @@ export default [
             meta: {
               breadcrumb: {
                 title: "编辑"
+              }
+            }
+          },
+          {
+            path: "/admin/lesson/:id",
+            name: "Lesson",
+            component: Lesson,
+            meta: {
+              breadcrumb: {
+                title: "课时"
               }
             }
           }

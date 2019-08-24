@@ -105,6 +105,13 @@
                   {{ scope.row.end_time || "-" }}
                 </template>
               </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button type="text" @click="handleLink(scope.row)"
+                    >去点名</el-button
+                  >
+                </template>
+              </el-table-column>
             </el-table>
           </el-card>
         </el-col>
@@ -194,6 +201,9 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    handleLink(row) {
+      this.$router.push({ name: "Lesson", params: { id: row.id } });
     }
   },
   components: {

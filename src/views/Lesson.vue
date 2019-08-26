@@ -11,24 +11,47 @@
           {{ lesson.end_time }}
         </el-form-item>
         <el-form-item label="课时状态" style="width:280px;">
-          <el-select v-model="lesson.status" placeholder="课时状态">
+          <el-select
+            v-model="lesson.status"
+            @change="handleChangeStatus"
+            placeholder="课时状态"
+          >
             <el-option :label="'已结束'" :value="1"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
 
       <h3>报名学员</h3>
-      <el-table :data="users" style="width: 100%">
+      <el-table
+        :data="users"
+        @selection-change="handleSelectionChange"
+        style="width: 100%"
+        class="mb-20"
+      >
+        <el-table-column
+          type="selection"
+          :selectable="row => !row.status"
+          width="55"
+        >
+        </el-table-column>
         <el-table-column prop="name" label="学员名称"></el-table-column>
         <el-table-column label="点名情况">
           <template slot-scope="scope">
             <el-tag v-if="!scope.row.status" type="info">未点名</el-tag>
-            <el-tag v-if="scope.row.status === 1" type="">已点名</el-tag>
-            <el-tag v-if="!scope.row.status === 2" type="success">请假</el-tag>
+            <el-tag v-if="scope.row.status === 1" type="">请假</el-tag>
+            <el-tag v-if="scope.row.status === 2" type="success">已点名</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="finish_at" label="点名时间"> </el-table-column>
+        <el-table-column prop="finish_at" label="时间"> </el-table-column>
       </el-table>
+      <div>
+        <el-button
+          type="primary"
+          @click="handleSubmit"
+          :disabled="!selectUserIds.length"
+          >点名</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -42,26 +65,71 @@ export default {
     return {
       loading: true,
       users: [],
+      selectUserIds: [],
       lesson: {
         status: ""
-      },
-      lessonStatus: ""
+      }
     };
   },
   created() {
-    let id = this.$route.params.id;
-    lessonService
-      .list(id)
-      .then(res => {
-        this.users = res.data.users;
-        this.lesson = res.data.lesson;
-        this.lessonStatus = res.data.lesson.status || "";
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getData();
   },
-  methods: {},
+  methods: {
+    getData() {
+      let id = this.$route.params.id;
+      lessonService
+        .list(id)
+        .then(res => {
+          this.users = res.data.users;
+          this.lesson = res.data.lesson;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    handleChangeStatus() {
+      let id = this.$route.params.id;
+      lessonService
+        .status(id, {
+          status: this.lesson.status
+        })
+        .then(res => {
+          if (res.code === 200) {
+            this.$message.success("成功修改课时状态！");
+          }
+        });
+    },
+    handleSelectionChange(row) {
+      this.selectUserIds = row
+        .filter(data => !data.status)
+        .map(data => data.id);
+    },
+    handleSubmit: async function() {
+      let id = this.$route.params.id;
+      let selectUserIds = this.selectUserIds;
+      if (!selectUserIds.length) {
+        this.$message.error("没有选择的学员");
+        return;
+      }
+      try {
+        selectUserIds.forEach(async user_id => {
+          await lessonService.callnow(id, { user_id });
+        });
+        this.handleResetUsers();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    handleResetUsers() {
+      this.users.forEach(data => {
+        if (this.selectUserIds.includes(data.id)) {
+          data.status = 2;
+          data.finish_at = new Date().toJSON();
+        }
+      });
+      this.selectUserIds = [];
+    }
+  },
   components: {
     "v-breadcrumb": Breadcrumb
   }

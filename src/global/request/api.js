@@ -13,7 +13,9 @@ const API = {
   class: `${PREFIX}/class`,
   classItem: id => `${PREFIX}/class/${id}`,
   lessonItem: id => `${PREFIX}/lesson/${id}`,
-  classAddUser: id => `${PREFIX}/class/${id}/adduser`
+  classAddUser: id => `${PREFIX}/class/${id}/adduser`,
+  lessonStatus: id => `${PREFIX}/lesson/${id}/status`,
+  lessonCallNow: id => `${PREFIX}/lesson/${id}/callnow`
 };
 
 export default API;

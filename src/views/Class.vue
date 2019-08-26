@@ -63,9 +63,7 @@
           <template slot-scope="scope">
             <el-tag v-if="!scope.row.status" type="info">未开启</el-tag>
             <el-tag v-if="scope.row.status === 1" type="">进行中</el-tag>
-            <el-tag v-if="!scope.row.status === 2" type="success"
-              >已结束</el-tag
-            >
+            <el-tag v-if="scope.row.status === 2" type="success">已结束</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作">

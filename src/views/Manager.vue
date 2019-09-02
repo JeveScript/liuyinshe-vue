@@ -43,7 +43,7 @@ export default {
     managerService
       .list()
       .then(res => {
-        let manager = res.data;
+        let manager = res;
         this.tableData = manager;
       })
       .finally(() => {

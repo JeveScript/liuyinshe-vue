@@ -45,7 +45,7 @@ export default {
     courseService
       .list()
       .then(res => {
-        let course = res.data;
+        let course = res;
         this.tableData = course;
       })
       .finally(() => {

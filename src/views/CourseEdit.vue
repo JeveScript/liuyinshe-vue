@@ -9,7 +9,7 @@
         label-position="left"
         label-width="160px"
       >
-        <h3>子管理员信息</h3>
+        <h3>课程信息</h3>
         <el-form-item label="课程名称" prop="name" style="width:460px;">
           <el-input v-model="formData.name" placeholder="请输入课程名称" />
         </el-form-item>
@@ -80,7 +80,7 @@ export default {
   created() {
     let id = this.$route.params.id;
     courseService.show(id).then(res => {
-      let userInfo = res.data;
+      let userInfo = res;
       this.formData = userInfo;
     });
   },

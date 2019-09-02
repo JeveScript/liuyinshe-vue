@@ -225,13 +225,13 @@ export default {
     getClassInfo() {
       let id = this.$route.params.id;
       classService.show(id).then(res => {
-        this.formData = res.data.class;
-        this.lessons = res.data.lessons;
+        this.formData = res.class;
+        this.lessons = res.lessons;
       });
     },
     getCourse() {
       courseService.list().then(res => {
-        this.courses = res.data;
+        this.courses = res;
       });
     },
     handleEdit() {

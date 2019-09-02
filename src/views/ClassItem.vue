@@ -151,9 +151,9 @@ export default {
     getClassInfo() {
       let id = this.$route.params.id;
       classService.show(id).then(res => {
-        this.formData = res.data.class;
-        this.lessons = res.data.lessons;
-        this.users = res.data.users;
+        this.formData = res.class;
+        this.lessons = res.lessons;
+        this.users = res.users;
       });
     },
     linkClassEdit() {
@@ -172,7 +172,7 @@ export default {
       userService
         .list(params)
         .then(res => {
-          this.searchUsers = res.data.datas;
+          this.searchUsers = res.datas;
         })
         .finally(() => {
           this.searchLoading = false;

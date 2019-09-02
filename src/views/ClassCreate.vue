@@ -127,7 +127,7 @@ export default {
   methods: {
     getCourse() {
       courseService.list().then(res => {
-        this.courses = res.data;
+        this.courses = res;
       });
     },
     handleCreateManager() {
@@ -147,7 +147,7 @@ export default {
           classService
             .create(params)
             .then(res => {
-              let id = res.data.class_id;
+              let id = res.class_id;
               this.$message.success("创建成功");
               this.$router.push({ name: "ClassEdit", params: { id } });
             })

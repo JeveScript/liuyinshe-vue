@@ -80,8 +80,8 @@ export default {
       lessonService
         .list(id)
         .then(res => {
-          this.users = res.data.users;
-          this.lesson = res.data.lesson;
+          this.users = res.users;
+          this.lesson = res.lesson;
         })
         .finally(() => {
           this.loading = false;
@@ -123,7 +123,7 @@ export default {
     handleResetUsers() {
       this.users.forEach(data => {
         if (this.selectUserIds.includes(data.id)) {
-          data.status = 2;
+          data.status = 1;
           data.finish_at = new Date().toJSON();
         }
       });

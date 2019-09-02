@@ -1,4 +1,4 @@
-// import { Message } from "element-ui";
+import { Message } from "element-ui";
 // import DataStore from "@/global/storage/index";
 import axios from "axios";
 axios.defaults.timeout = 20000;
@@ -48,16 +48,16 @@ axios.defaults.timeout = 20000;
 // 添加响应拦截器
 axios.interceptors.response.use(
   res => {
-    // // 兼容包了一层 { code, data } 的情况
-    // switch (true) {
-    //   case res.data && res.data.code === 200:
-    //     return res.data.data;
-    //   case res.data && res.data.code !== 200:
-    //     Message.error(res.data.message);
-    //     return Promise.reject(res.data);
-    //   default:
-    return res.data;
-    // }
+    // 兼容包了一层 { code, data } 的情况
+    switch (true) {
+      case res.data && res.data.code === 200:
+        return res.data.data;
+      case res.data && res.data.code !== 200:
+        Message.error(res.data.message);
+        return Promise.reject(res.data);
+      default:
+        return res.data;
+    }
   },
   error => {
     // handleErrorRequest(error);

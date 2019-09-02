@@ -112,7 +112,7 @@ export default {
   created() {
     let id = this.$route.params.id;
     userService.show(id).then(res => {
-      let userInfo = res.data.user;
+      let userInfo = res.user;
       this.formData = userInfo;
     });
   },

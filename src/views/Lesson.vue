@@ -38,8 +38,8 @@
         <el-table-column label="点名情况">
           <template slot-scope="scope">
             <el-tag v-if="!scope.row.status" type="info">未点名</el-tag>
-            <el-tag v-if="scope.row.status === 1" type="">请假</el-tag>
-            <el-tag v-if="scope.row.status === 2" type="success">已点名</el-tag>
+            <el-tag v-if="scope.row.status === 2" type="">请假</el-tag>
+            <el-tag v-if="scope.row.status === 1" type="success">已点名</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="finish_at" label="时间"> </el-table-column>

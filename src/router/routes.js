@@ -35,6 +35,7 @@ const ClassItem = () =>
   import(/* webpackChunkName: "Class" */ "@/views/ClassItem.vue");
 const Lesson = () =>
   import(/* webpackChunkName: "Class" */ "@/views/Lesson.vue");
+const Leave = () => import(/* webpackChunkName: "Leave" */ "@/views/Leave.vue");
 
 export default [
   {
@@ -123,6 +124,21 @@ export default [
             }
           }
         ]
+      },
+      {
+        path: "/leave",
+        name: "Leave",
+        component: Leave,
+        meta: {
+          breadcrumb: {
+            title: "请假管理",
+            replace: false
+          },
+          nav: {
+            icon: "el-icon-headset",
+            title: "请假"
+          }
+        }
       },
       {
         path: "/payment",

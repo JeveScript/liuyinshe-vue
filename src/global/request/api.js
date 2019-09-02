@@ -3,6 +3,8 @@ const PREFIX = "/api";
 
 const API = {
   authLogin: `${PREFIX}/auth/login`,
+  leave: `${PREFIX}/leave`,
+  leaveItem: id => `${PREFIX}/leave/${id}`,
   manager: `${PREFIX}/manager`,
   managerItem: id => `${PREFIX}/manager/${id}`,
   user: `${PREFIX}/user`,

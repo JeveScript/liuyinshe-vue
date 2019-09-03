@@ -161,7 +161,7 @@
       </div>
     </div>
     <footer class="footer-container">
-      <p class="footer-title">广东留音社</p>
+      <p class="footer-title">广东留音社:中华人民共和国广东省广州市增城区</p>
       <p class="footer-desc">origin 2018</p>
     </footer>
   </div>
@@ -226,6 +226,7 @@ export default {
   left: 0;
   height: 88px;
   font-size: 0;
+  z-index: 1;
   .link-list {
     width: 100%;
     height: 88px;
@@ -250,6 +251,7 @@ export default {
     bottom: -28px;
     left: 50%;
     border: 10px solid #f5f5f5;
+    transform: translateX(-28px);
   }
 }
 .background-container {
@@ -495,14 +497,16 @@ export default {
     line-height: 100px;
   }
   .evaluate-list {
+    width: 1000px;
+    margin: 0 auto;
     .evaluate-item {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
       .evaluate-item-image {
-        width: 228px;
-        height: 228px;
+        width: 160px;
+        height: 160px;
         border-radius: 50%;
         background-color: #3388ab;
         flex-shrink: 0;
@@ -589,13 +593,13 @@ export default {
 .footer-container {
   background-color: #fbf8f0;
   text-align: center;
-  padding: 30px;
+  padding: 10px;
   .footer-title {
-    font-size: 24px;
+    font-size: 12px;
     font-weight: 500px;
   }
   .footer-desc {
-    font-size: 16px;
+    font-size: 12px;
   }
 }
 </style>

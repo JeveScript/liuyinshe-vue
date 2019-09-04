@@ -46,7 +46,7 @@
             </el-table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="用户消费" name="userPayment">
+        <el-tab-pane label="消费记录" name="userPayment">
           <div class="payment-section">
             <h3>消费记录</h3>
             <el-table class="mb-20" :data="paymentDatas" style="width: 100%">
@@ -64,6 +64,58 @@
             </el-table>
           </div>
         </el-tab-pane>
+        <el-tab-pane label="用户充值" name="userDeposit">
+          <div class="user-deposit" style="width:300px;">
+            <h3>用户充值</h3>
+            <el-form
+              label-position="left"
+              label-width="80px"
+              :model="userDeposit"
+            >
+              <el-form-item label="充值金额" :hide-required-asterisk="true">
+                <el-input
+                  v-model="userDeposit.price"
+                  placeholder="请输入充值金额，默认单位元"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="充值备注" hide-required-asterisk="true">
+                <el-input
+                  type="textarea"
+                  v-model="userDeposit.remark"
+                  placeholder="请输入此次充值备注"
+                  resize="none"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+            <el-button type="warning" @click="Deposit">确认充值</el-button>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="用户消费" name="userPurchase">
+          <div class="user-purchase" style="width:300px;">
+            <h3>用户消费</h3>
+            <el-form
+              label-position="left"
+              label-width="80px"
+              :model="userPurchase"
+            >
+              <el-form-item label="消费金额" :hide-required-asterisk="true">
+                <el-input
+                  v-model="userPurchase.price"
+                  placeholder="请输入消费金额，默认单位元"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="消费备注" hide-required-asterisk="true">
+                <el-input
+                  type="textarea"
+                  v-model="userPurchase.remark"
+                  placeholder="请输入此次消费备注"
+                  resize="none"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+            <el-button type="danger" @click="purchase">确认消费</el-button>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -72,6 +124,8 @@
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import userService from "@/global/service/user.js";
+import paymentService from "@/global/service/payment.js";
+import { request } from "http";
 
 export default {
   data() {
@@ -86,6 +140,14 @@ export default {
         sms_name: "",
         sms_phone: ""
       },
+      userDeposit: {
+        price: "",
+        remark: ""
+      },
+      userPurchase: {
+        price: "",
+        remark: ""
+      },
       classDatas: [],
       paymentDatas: []
     };
@@ -99,7 +161,66 @@ export default {
       this.formData = userInfo;
     });
   },
-  methods: {},
+  methods: {
+    Deposit: function() {
+      let userDeposit = this.userDeposit;
+      var reg = new RegExp("^[0-9]*$");
+      if (!reg.test(userDeposit.price)) {
+        return this.$message("金额必须为数字且为正数");
+      }
+
+      if (userDeposit.price && userDeposit.remark) {
+        let id = this.$route.params.id;
+        let data = {
+          status: 1,
+          user_id: id,
+          total: userDeposit.price,
+          remark: userDeposit.remark
+        };
+        paymentService
+          .create(data)
+          .then(res => {
+            this.$message("充值成功");
+            this.userDeposit.remark = "";
+            this.userDeposit.price = "";
+          })
+          .catch(err => {
+            this.$message("服务器错误");
+          });
+      } else {
+        this.$message("两者是必填项，请输入");
+      }
+    },
+    purchase: function() {
+      let userPurchase = this.userPurchase;
+      var reg = new RegExp("^[0-9]*$");
+      if (!reg.test(userPurchase.price)) {
+        return this.$message("金额必须为数字且为正数");
+      }
+
+      if (userPurchase.price && userPurchase.remark) {
+        let id = this.$route.params.id;
+        let data = {
+          status: 2,
+          user_id: id,
+          total: -userPurchase.price,
+          remark: userPurchase.remark
+        };
+        paymentService
+          .create(data)
+          .then(res => {
+            this.$message("消费成功");
+            this.userPurchase.remark = "";
+            this.userPurchase.price = "";
+          })
+          .catch(err => {
+            this.$message("服务器错误");
+          });
+      } else {
+        this.$message("两者是必填项，请输入");
+      }
+    }
+  },
   components: {
     "v-breadcrumb": Breadcrumb
   }

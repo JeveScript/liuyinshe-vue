@@ -162,7 +162,6 @@
     </div>
     <footer class="footer-container">
       <p class="footer-title">广东留音社:中华人民共和国广东省广州市增城区</p>
-      <p class="footer-desc">origin 2018</p>
     </footer>
   </div>
 </template>
@@ -597,9 +596,6 @@ export default {
   .footer-title {
     font-size: 12px;
     font-weight: 500px;
-  }
-  .footer-desc {
-    font-size: 12px;
   }
 }
 </style>

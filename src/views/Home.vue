@@ -161,7 +161,10 @@
       </div>
     </div>
     <footer class="footer-container">
-      <p class="footer-title">广东留音社:中华人民共和国广东省广州市增城区</p>
+      <p class="footer-title">
+        广东留音社:中华人民共和国广东省广州市增城区
+        <router-link to="/login"><span>I I</span></router-link>
+      </p>
     </footer>
   </div>
 </template>
@@ -214,6 +217,9 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+a {
+  text-decoration: none;
 }
 .page-container {
   padding-top: 88px;

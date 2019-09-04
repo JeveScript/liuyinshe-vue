@@ -125,7 +125,6 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import userService from "@/global/service/user.js";
 import paymentService from "@/global/service/payment.js";
-import { request } from "http";
 
 export default {
   data() {
@@ -164,11 +163,12 @@ export default {
   methods: {
     Deposit: function() {
       let userDeposit = this.userDeposit;
-      var reg = new RegExp("^[0-9]*$");
-      if (!reg.test(userDeposit.price)) {
-        return this.$message("金额必须为数字且为正数");
+      if (isNaN(userDeposit.price)) {
+        return this.$message("金额必须为数字");
       }
-
+      if (userDeposit.price < 0) {
+        return this.$message("金额必须为正数");
+      }
       if (userDeposit.price && userDeposit.remark) {
         let id = this.$route.params.id;
         let data = {
@@ -179,12 +179,12 @@ export default {
         };
         paymentService
           .create(data)
-          .then(res => {
+          .then(() => {
             this.$message("充值成功");
             this.userDeposit.remark = "";
             this.userDeposit.price = "";
           })
-          .catch(err => {
+          .catch(() => {
             this.$message("服务器错误");
           });
       } else {
@@ -193,11 +193,12 @@ export default {
     },
     purchase: function() {
       let userPurchase = this.userPurchase;
-      var reg = new RegExp("^[0-9]*$");
-      if (!reg.test(userPurchase.price)) {
-        return this.$message("金额必须为数字且为正数");
+      if (isNaN(userPurchase.price)) {
+        return this.$message("金额必须为数字");
       }
-
+      if (userPurchase.price < 0) {
+        return this.$message("金额必须为正数");
+      }
       if (userPurchase.price && userPurchase.remark) {
         let id = this.$route.params.id;
         let data = {
@@ -208,12 +209,12 @@ export default {
         };
         paymentService
           .create(data)
-          .then(res => {
+          .then(() => {
             this.$message("消费成功");
             this.userPurchase.remark = "";
             this.userPurchase.price = "";
           })
-          .catch(err => {
+          .catch(() => {
             this.$message("服务器错误");
           });
       } else {

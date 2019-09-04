@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import getStore from "@/storage/index.js";
+import getStore from "@/global/storage/index.js";
 export default {
   data() {
     return {
@@ -41,23 +41,23 @@ export default {
     }
   },
   created: function() {
-    let user_name = getStore.getData("user_name");
-    if (!user_name) {
+    let user_name = getStore.storage.get("user_name");
+    let token = getStore.storage.get("token");
+    console.log(token, user_name);
+    if (!user_name || !token) {
       return this.$router.replace({ name: "AccountLogin" });
     }
     this.user_name = user_name;
-    console.log(user_name);
   },
   methods: {
     handleCollapse() {
       this.$emit("update:collapse", !this.collapse);
     },
     handleMenu: function(value) {
-      console.log(123, value);
       if (value == "secede") {
-        getStore.delData("token");
-        getStore.delData("user_name");
-        getStore.delData("user_id");
+        getStore.storage.delete("token");
+        getStore.storage.delete("user_name");
+        getStore.storage.delete("user_id");
         return this.$router.replace({ name: "AccountLogin" });
       }
     }

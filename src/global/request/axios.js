@@ -1,49 +1,20 @@
 import { Message } from "element-ui";
-// import DataStore from "@/global/storage/index";
+import DataStore from "@/global/storage/index";
 import axios from "axios";
 axios.defaults.timeout = 20000;
 
 // 添加一个请求拦截器（ 一般用于鉴权 )
-// axios.interceptors.request.use(
-//   config => {
-//     const newConfig = { ...config };
-//     const TOKEN = DataStore.getToken();
-//     if (TOKEN) {
-//       newConfig.headers.Authorization = `Bearer ${TOKEN}`;
-//     }
-//     return newConfig;
-//   },
-//   error => Promise.reject(error)
-// );
-
-// 全局错误处理
-// const handleErrorRequest = error => {
-//   const { response } = error;
-//   const status = response ? response.status : 408;
-
-//   if (response) {
-//     const { data } = response;
-//     const { errors } = data;
-//     const message = data.message || "服务器发送错误，请稍后再试";
-//     if (status === 401) {
-//       console.log("没有登录");
-//       DataStore.clear();
-//       console.log(error);
-//     } else if (status === 419) {
-//       console.log("页面过期");
-//       DataStore.clear();
-//     } else if (status === 422 || status === 423 || status === 429) {
-//       Object.keys(errors).forEach(errorKey => {
-//         const errorValue = errors[errorKey].join("\n");
-//         Message.error(errorValue);
-//       });
-//     } else {
-//       Message.error(message);
-//     }
-//   } else {
-//     Message.error("网络超时");
-//   }
-// };
+axios.interceptors.request.use(
+  config => {
+    const newConfig = { ...config };
+    const TOKEN = DataStore.getToken();
+    if (TOKEN) {
+      newConfig.headers.Authorization = `Bearer ${TOKEN}`;
+    }
+    return newConfig;
+  },
+  error => Promise.reject(error)
+);
 
 // 添加响应拦截器
 axios.interceptors.response.use(

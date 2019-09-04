@@ -61,7 +61,7 @@
 
 <script>
 import managerService from "@/global/service/manager.js";
-import setStore from "@/storage/index.js";
+import setStore from "@/global/storage/index.js";
 export default {
   data() {
     return {
@@ -89,23 +89,20 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.passwordFrom);
           let data = {
             phone: this.passwordFrom.phone,
             password: this.passwordFrom.password
           };
-          console.log(data);
           managerService
             .login(data)
             .then(res => {
               setStore.setToken(res.token);
-              setStore.setData("user_name", res.userInfo.user_name);
-              setStore.setData("user_id", res.userInfo.user_id);
+              setStore.storage.set("user_name", res.userInfo.user_name);
+              setStore.storage.set("user_id", res.userInfo.user_id);
               this.$router.replace({ name: "Dashboard" });
             })
-            .catch(err => {
-              console.log(err);
-              this.$message("登陆失败，请正确填写");
+            .catch(() => {
+              // this.$message("登陆失败，请确认账号及密码正确");
             });
         }
       });

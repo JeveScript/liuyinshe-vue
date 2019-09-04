@@ -44,17 +44,6 @@ class DataStore {
   setToken(token) {
     this.storage.set("token", token);
   }
-  getData(data) {
-    return this.storage.get(data);
-  }
-
-  setData(name, data) {
-    this.storage.set(name, data);
-  }
-  delData(name, data) {
-    this.storage.delete(name, data);
-  }
-
   clear() {
     localStorage.clear();
     sessionStorage.clear();

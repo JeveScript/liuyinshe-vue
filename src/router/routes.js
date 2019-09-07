@@ -36,6 +36,12 @@ const ClassItem = () =>
 const Lesson = () =>
   import(/* webpackChunkName: "Class" */ "@/views/Lesson.vue");
 const Leave = () => import(/* webpackChunkName: "Leave" */ "@/views/Leave.vue");
+const teacher = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacher.vue");
+const teacherCreate = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacherCreate.vue");
+const teacherItem = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacherItem.vue");
 
 export default [
   {
@@ -298,6 +304,48 @@ export default [
             path: "/admin/manager/:id/edit",
             name: "ManagerEdit",
             component: ManagerEdit,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: "/admin/teacher",
+        name: "TeacherRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "Teacher" },
+        meta: {
+          nav: {
+            icon: "el-icon-user",
+            title: "老师"
+          },
+          breadcrumb: {
+            title: "老师"
+          }
+        },
+        children: [
+          {
+            path: "/admin/teacher",
+            name: "Teacher",
+            component: teacher
+          },
+          {
+            path: "/admin/teacher/create",
+            name: "TeacherCreate",
+            component: teacherCreate,
+            meta: {
+              breadcrumb: {
+                title: "新建"
+              }
+            }
+          },
+          {
+            path: "/admin/teacher/:id/edit",
+            name: "TeacherEdit",
+            component: teacherItem,
             meta: {
               breadcrumb: {
                 title: "详情"

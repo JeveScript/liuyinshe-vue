@@ -33,13 +33,28 @@
               >
                 {{ formData.sms_phone }}
               </el-form-item>
+              <el-form-item label="状态" prop="status" style="width:460px;">
+                {{ formData.status == 1 ? '在学' : '休假'}}
+              </el-form-item>
+              <el-form-item label="学校" prop="school" style="width:460px;">
+                {{ formData.school ? formData.school : "尚未填写"}}
+              </el-form-item>
+              <el-form-item label="居住地址" prop="site" style="width:460px;">
+                {{ formData.site ? formData.site : '尚未填写'}}
+              </el-form-item>
             </el-form>
           </div>
         </el-tab-pane>
         <el-tab-pane label="用户班级" name="userClass">
           <div class="table-secton mb-20">
             <h3>所报班级</h3>
-            <el-table :data="classDatas" class="mb-20" style="width: 100%">
+            <el-table
+              :data="classDatas"
+              class="mb-20"
+              style="width: 100%"
+              height="600"
+              border
+            >
               <el-table-column prop="name" label="班级名称" />
               <el-table-column prop="start_at" label="开班时间" />
               <el-table-column prop="end_at" label="结束时间" />
@@ -49,7 +64,13 @@
         <el-tab-pane label="消费记录" name="userPayment">
           <div class="payment-section">
             <h3>消费记录</h3>
-            <el-table class="mb-20" :data="paymentDatas" style="width: 100%">
+            <el-table
+              class="mb-20"
+              :data="paymentDatas"
+              style="width: 100%"
+              height="600"
+              border
+            >
               <el-table-column prop="created_at" label="时间">
               </el-table-column>
               <el-table-column prop="total" label="金额"></el-table-column>
@@ -65,7 +86,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="用户充值" name="userDeposit">
-          <div class="user-deposit" style="width:300px;">
+          <div class="user-deposit" style="width:460px;">
             <h3>用户充值</h3>
             <el-form
               label-position="left"
@@ -91,7 +112,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="用户消费" name="userPurchase">
-          <div class="user-purchase" style="width:300px;">
+          <div class="user-purchase" style="width:460px;">
             <h3>用户消费</h3>
             <el-form
               label-position="left"
@@ -137,7 +158,10 @@ export default {
         sex: "",
         birthday: "",
         sms_name: "",
-        sms_phone: ""
+        sms_phone: "",
+        status:'',
+        site:'',
+        school:'',
       },
       userDeposit: {
         price: "",

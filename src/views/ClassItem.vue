@@ -30,7 +30,13 @@
             >
           </div>
         </div>
-        <el-table :data="users" class="mb-20" style="width: 100%">
+        <el-table
+          :data="users"
+          class="mb-20"
+          style="width: 100%"
+          height="350"
+          border
+        >
           <el-table-column prop="name" label="姓名" />
           <el-table-column prop="phone" label="手机" />
           <el-table-column prop="created_at" label="加入时间" />
@@ -151,6 +157,7 @@ export default {
     getClassInfo() {
       let id = this.$route.params.id;
       classService.show(id).then(res => {
+        console.log(res);
         this.formData = res.class;
         this.lessons = res.lessons;
         this.users = res.users;
@@ -189,14 +196,14 @@ export default {
       classService
         .addUser(id, { user_id })
         .then(res => {
-          if (res.code === 200) {
-            this.user_id = "";
-            this.$message.success("添加成功！");
-            let user = this.searchUsers.find(data => data.id === user_id);
-            this.users.push(user);
-          } else {
-            this.$message.error(res.message);
-          }
+          this.user_id = "";
+          this.$message.success("添加成功！");
+          let user = this.searchUsers.find(data => data.id === user_id);
+          console.log(user, 123);
+          this.users.push(user);
+        })
+        .catch(err => {
+          this.$message.error(res.message);
         })
         .finally(() => {
           this.loading = false;

@@ -16,7 +16,10 @@
             @change="handleChangeStatus"
             placeholder="课时状态"
           >
-            <el-option :label="'已结束'" :value="1"></el-option>
+            <el-option :label="'进行中'" :value="0"></el-option>
+            <el-option :label="'取消'" :value="1"></el-option>
+            <el-option :label="'已完成'" :value="2"></el-option>
+            <!-- <el-option :label="'已结束'" :value="1"></el-option> -->
           </el-select>
         </el-form-item>
       </el-form>

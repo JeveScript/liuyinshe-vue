@@ -85,6 +85,14 @@ export default {
       disabled: false
     };
   },
+  created: function() {
+    let user_name = setStore.storage.get("user_name");
+    let token = setStore.storage.get("token");
+    console.log(token, user_name);
+    if (user_name && token) {
+      return this.$router.replace({ name: "Dashboard" });
+    }
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

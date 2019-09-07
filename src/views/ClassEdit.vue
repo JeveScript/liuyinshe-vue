@@ -27,6 +27,7 @@
             </el-form-item>
             <el-form-item label="状态" prop="status" style="width:460px;">
               <el-select v-model="formData.status" placeholder="请选择">
+                <el-option :label="'未开启'" :value="0"></el-option>
                 <el-option :label="'进行中'" :value="1"></el-option>
                 <el-option :label="'已结束'" :value="2"></el-option>
               </el-select>

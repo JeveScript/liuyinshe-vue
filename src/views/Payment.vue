@@ -132,9 +132,7 @@ export default {
         .then(res => {
           this.tableData = res.datas;
           this.pagination.pageSize = Number(res.pagination.page_size);
-          this.pagination.currentPage = Number(
-            res.data.pagination.current_page
-          );
+          this.pagination.currentPage = Number(res.pagination.current_page);
           this.pagination.total = Number(res.pagination.total);
         })
         .finally(() => {

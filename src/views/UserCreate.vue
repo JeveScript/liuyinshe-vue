@@ -51,6 +51,12 @@
             placeholder="请输入紧急联系人手机号"
           />
         </el-form-item>
+        <el-form-item label="学员地址" style="width:460px;">
+          <el-input v-model="formData.site" placeholder="请输入学员地址" />
+        </el-form-item>
+        <el-form-item label="学校地址" style="width:460px;">
+          <el-input v-model="formData.school" placeholder="请输入学校地址" />
+        </el-form-item>
         <el-form-item>
           <el-button
             type="primary"
@@ -105,7 +111,9 @@ export default {
         sex: "",
         birthday: "",
         sms_name: "",
-        sms_phone: ""
+        sms_phone: "",
+        site: "",
+        school: ""
       }
     };
   },
@@ -119,7 +127,9 @@ export default {
             sex: this.formData.sex,
             birthday: this.formData.birthday,
             sms_name: this.formData.sms_name,
-            sms_phone: this.formData.sms_phone
+            sms_phone: this.formData.sms_phone,
+            site: "",
+            school: ""
           };
           this.disabled = true;
           userService
@@ -127,6 +137,9 @@ export default {
             .then(() => {
               this.$message.success("创建成功");
               this.$router.push({ name: "User" });
+            })
+            .catch(() => {
+              this.$message("创建失败，查看用户是否已存在");
             })
             .finally(() => {
               this.disabled = false;

@@ -81,6 +81,9 @@ export default {
               this.$message.success("创建成功");
               this.$router.push({ name: "Manager" });
             })
+            .catch(err => {
+              this.$message("创建失败,查看用户是否存在");
+            })
             .finally(() => {
               this.disabled = false;
             });

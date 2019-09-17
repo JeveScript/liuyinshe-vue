@@ -49,7 +49,7 @@
           <p class="intro-title">我们的老师</p>
           <p class="intro-desc">100%的艺术，来源于用心的导师</p>
         </div>
-        <div class="intro-list">
+        <!-- <div class="intro-list">
           <div class="intro-list_item">
             <img
               src="./../image/teacher/teacher-1.png"
@@ -131,6 +131,109 @@
                 <p class="intro-item-content-text">
                   毕业于广东第二师范学院。师从程昱教授学习音乐教育法、奥尔夫教学法，教学经验丰富。参加广东省大学生艺术展演声乐大赛获得合唱一等奖、参加广东省大学生艺术展演器乐演奏获得乐团一等奖、获得花都区中小学合唱比赛优秀导师
                 </p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="class-list-container">
+          <div class="class-list-item" @click="showPiano">
+            <img
+              src="./../image/standby/standby1.jpg"
+              alt=""
+              class="class-list-item-image"
+            />
+            <div class="class-list-item-text">
+              <p class="class-list-item-text-title">
+                钢琴导师
+              </p>
+
+              <div class="Piano-teacher-container">
+                <div class="intro-list">
+                  <div class="intro-list_item">
+                    <img
+                      src="./../image/teacher/teacher-1.png"
+                      alt=""
+                      class="list_item-image"
+                    />
+                    <div class="intro-item-content">
+                      <p class="intro-item-content-title">魏大力</p>
+                      <p class="intro-item-content-desc">钢琴导师</p>
+                      <div class="intro-item-content-text-section">
+                        <p class="intro-item-content-text">
+                          中共党员 获星海音乐学院学士文凭
+                          作为中国内地首位《手指建立与音色表达》课程的研学者.他坚持依靠科学与理论实践相结合，潜心探索研究科学的钢琴演奏.他出生于音乐世家.六岁在家人的影响下开始学琴.并多次在校际节的音乐比赛中荣获第一名.自幼即有钢琴神童之美誉.在15岁时由于钢琴与文化课都出类拔萃被广州市艺术学校钢琴演奏专业录取.期间获奖学金.并随香港演艺学院大提琴演奏家庄家粱兼学大提琴演奏课程.后来于2009年以名列前茅的成绩被录取到星海音乐学院学习.得到施坦威艺术家冼劲松的专业指导.大学期间除了学习钢琴演奏.还兼学钢琴教学法.伴奏等课程.毕业后得到中央音乐学院钢琴系周广仁先生的赏析，并求学于周先生门下.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="intro-list_item">
+                    <img
+                      src="./../image/teacher/teacher-2.png"
+                      alt=""
+                      class="list_item-image"
+                    />
+                    <div class="intro-item-content">
+                      <p class="intro-item-content-title">伦雅颂</p>
+                      <p class="intro-item-content-desc">钢琴导师</p>
+                      <div class="intro-item-content-text-section">
+                        <p class="intro-item-content-text">
+                          5岁初学钢琴，自幼师从星海音乐学院钢琴系原副教授黄文娟。2015年入读大学进修钢琴，曾师从华南师范大学王大立教授、美国路易斯安那州立大学钢琴博士赖筠憓教授。现跟随纽约国际室内乐团钢琴兼指挥家DANIEL
+                          FENG学习。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="intro-list_item">
+                    <img
+                      src="./../image/teacher/teacher-3.png"
+                      alt=""
+                      class="list_item-image"
+                    />
+                    <div class="intro-item-content">
+                      <p class="intro-item-content-title">赖静瑜</p>
+                      <p class="intro-item-content-desc">钢琴导师</p>
+                      <div class="intro-item-content-text-section">
+                        <p class="intro-item-content-text">
+                          自幼开始接触音乐，在众多的音乐比赛中获奖，在钢琴演奏方面有特别的天赋与才华。2015年以优异成绩被录取到广东省外语艺术职业学院学习，除了钢琴演奏，还兼学“教育心理学”，“奥尔夫”，“柯达伊”，“钢琴教学法”。以优秀毕业生荣誉毕业并获学位，后来又考入广州第二师范学院，潜心研学钢琴演奏与教学。致力于钢琴启蒙教学
+                          ，钢琴考级等学术科研。2019年起受聘于留音社钢琴部。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="intro-list_item">
+                    <img
+                      src="./../image/teacher/teacher-4.png"
+                      alt=""
+                      class="list_item-image"
+                    />
+                    <div class="intro-item-content">
+                      <p class="intro-item-content-title">杨依琳</p>
+                      <p class="intro-item-content-desc">钢琴导师</p>
+                      <div class="intro-item-content-text-section">
+                        <p class="intro-item-content-text">
+                          自幼开始接触音乐，在钢琴演奏与教学方面有较高的造诣。特别是在钢琴教学方面，在获得大学毕业文凭后，就一直走在钢琴教学的最前线，在近五年的幼儿钢琴教学过程中积累了丰富的教学经验，特别是个别课中，能因材施教、针对学生的不同年龄层，掌握学生的心理状况，积极去培养学生学习音乐的兴趣，并加以循循善诱，让学生对音乐艺术能够充分的感受和体会。并且每年积极组织学生参加钢琴等级与比赛，均获得优异的成绩。2015年获得“The
+                          one钢琴智能钢琴课程教师培训资格”。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="intro-list_item">
+                    <img
+                      src="./../image/teacher/teacher-0.png"
+                      alt=""
+                      class="list_item-image"
+                    />
+                    <div class="intro-item-content">
+                      <p class="intro-item-content-title">梁富翔</p>
+                      <p class="intro-item-content-desc">钢琴导师</p>
+                      <div class="intro-item-content-text-section">
+                        <p class="intro-item-content-text">
+                          毕业于广东第二师范学院。师从程昱教授学习音乐教育法、奥尔夫教学法，教学经验丰富。参加广东省大学生艺术展演声乐大赛获得合唱一等奖、参加广东省大学生艺术展演器乐演奏获得乐团一等奖、获得花都区中小学合唱比赛优秀导师
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -249,7 +352,8 @@ export default {
     },
     linear: function(time, begin, end, duration) {
       return ((end - begin) * time) / duration + begin;
-    }
+    },
+    showPiano: function() {}
   }
 };
 </script>
@@ -356,6 +460,7 @@ a {
   flex-direction: column;
   align-items: center;
   background-color: #f4eee3;
+  position: relative;
   .intro-title {
     font-size: 36px;
     color: #786154;
@@ -396,8 +501,12 @@ a {
   .intro-list {
     display: flex;
     // justify-content: center;
-    width: 1000px;
+    box-sizing: content-box;
+    padding: 30px 50px;
+    width: 1017px;
+    height: 350px;
     flex-wrap: wrap;
+    overflow-y: scroll;
     .intro-list_item {
       width: 235px;
       height: 300px;
@@ -405,7 +514,7 @@ a {
       text-align: center;
       padding: 60px 0 0 0;
       position: relative;
-      background-color: #fff;
+      background-color: #fbfbfb;
       margin-top: 60px;
       position: relative;
       &:nth-child(4n + 0) {
@@ -461,6 +570,45 @@ a {
             width: 177px;
             overflow-y: scroll;
             height: 130px;
+          }
+        }
+      }
+    }
+  }
+  .class-list-container {
+    display: flex;
+    justify-content: center;
+    .class-list-item {
+      margin: 0 30px;
+      text-align: center;
+
+      .class-list-item-image {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+      }
+      .class-list-item-text {
+        .class-list-item-text-title {
+          font-size: 24px;
+          columns: #333;
+          font-weight: 500;
+          line-height: 70px;
+        }
+        .Piano-teacher-container {
+          display: none;
+          background-color: #fff;
+          width: 1100px;
+          overflow: hidden;
+          position: absolute;
+          top: 230px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 999;
+          border-radius: 5px;
+        }
+        &:hover {
+          .Piano-teacher-container {
+            display: inline-block;
           }
         }
       }

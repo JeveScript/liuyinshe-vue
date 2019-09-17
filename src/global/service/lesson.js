@@ -10,6 +10,9 @@ const lessonService = {
   },
   callnow: function(id, params) {
     return request.post(API.lessonCallNow(id), params);
+  },
+  newDate: function() {
+    return request.get(API.newDateLesson);
   }
 };
 

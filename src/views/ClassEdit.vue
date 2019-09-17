@@ -32,6 +32,20 @@
                 <el-option :label="'已结束'" :value="2"></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+              label="带课老师"
+              prop="teacher_id"
+              style="width:460px;"
+            >
+              <el-select v-model="formData.teacher_id">
+                <el-option
+                  v-for="item in teacherData"
+                  :key="item.id"
+                  :label="item.teacher_name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
             <el-form-item label="开始时间" prop="start_at" style="width:460px;">
               <el-date-picker
                 v-model="formData.start_at"
@@ -166,6 +180,7 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import classService from "@/global/service/class.js";
 import courseService from "@/global/service/course.js";
+import teacherService from "@/global/service/teacher.js";
 
 export default {
   data() {
@@ -174,6 +189,7 @@ export default {
       loading: false,
       courses: [],
       lessons: [],
+      teacherData: [],
       dialogVisible: false,
       selectLessonIndex: null,
       selectLessonId: null,
@@ -181,6 +197,9 @@ export default {
         name: [{ required: true, message: "请输入班级名称", trigger: "blur" }],
         course_id: [
           { required: true, message: "请输入关联课程", trigger: "blur" }
+        ],
+        teacher_id: [
+          { required: true, message: "请输入带课老师", trigger: "blur" }
         ],
         start_at: [
           { required: true, message: "请输入开始时间", trigger: "blur" }
@@ -197,6 +216,7 @@ export default {
         name: "",
         start_at: "",
         course_id: "",
+        teacher_id: "",
         end_at: "",
         lesson_count: "",
         price: "",
@@ -221,8 +241,19 @@ export default {
   created() {
     this.getCourse();
     this.getClassInfo();
+    this.getTeacher();
   },
   methods: {
+    getTeacher() {
+      teacherService
+        .list()
+        .then(res => {
+          this.teacherData = res;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     getClassInfo() {
       let id = this.$route.params.id;
       classService.show(id).then(res => {

@@ -34,13 +34,13 @@
                 {{ formData.sms_phone }}
               </el-form-item>
               <el-form-item label="状态" prop="status" style="width:460px;">
-                {{ formData.status == 1 ? '在学' : '休假'}}
+                {{ formData.status == 1 ? "在学" : "休假" }}
               </el-form-item>
               <el-form-item label="学校" prop="school" style="width:460px;">
-                {{ formData.school ? formData.school : "尚未填写"}}
+                {{ formData.school ? formData.school : "尚未填写" }}
               </el-form-item>
               <el-form-item label="居住地址" prop="site" style="width:460px;">
-                {{ formData.site ? formData.site : '尚未填写'}}
+                {{ formData.site ? formData.site : "尚未填写" }}
               </el-form-item>
             </el-form>
           </div>
@@ -159,9 +159,9 @@ export default {
         birthday: "",
         sms_name: "",
         sms_phone: "",
-        status:'',
-        site:'',
-        school:'',
+        status: "",
+        site: "",
+        school: ""
       },
       userDeposit: {
         price: "",

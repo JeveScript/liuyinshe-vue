@@ -51,16 +51,13 @@
             placeholder="请输入紧急联系人手机号"
           />
         </el-form-item>
-        <el-form-item
-          label="学生状态"
-          style="width:460px;"
-        >
+        <el-form-item label="学生状态" style="width:460px;">
           <el-radio-group v-model="formData.status">
             <el-radio :label="1">在学</el-radio>
             <el-radio :label="2">休假</el-radio>
           </el-radio-group>
         </el-form-item>
-         <el-form-item label="学员地址" style="width:460px;">
+        <el-form-item label="学员地址" style="width:460px;">
           <el-input v-model="formData.site" placeholder="请输入学员地址" />
         </el-form-item>
         <el-form-item label="学校" style="width:460px;">
@@ -121,9 +118,9 @@ export default {
         birthday: "",
         sms_name: "",
         sms_phone: "",
-        status:'',
-        site:'',
-        school:'',
+        status: "",
+        site: "",
+        school: ""
       }
     };
   },
@@ -147,9 +144,7 @@ export default {
             sms_phone: this.formData.sms_phone,
             status: this.formData.status,
             site: this.formData.site,
-            school: this.formData.school,
-
-            
+            school: this.formData.school
           };
           this.disabled = true;
           let id = this.$route.params.id;

@@ -23,6 +23,16 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="带课老师" prop="teacher_id" style="width:460px;">
+          <el-select v-model="formData.teacher_id">
+            <el-option
+              v-for="item in teacherData"
+              :key="item.id"
+              :label="item.teacher_name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="开始时间" prop="start_at" style="width:460px;">
           <el-date-picker
             v-model="formData.start_at"
@@ -84,7 +94,7 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import classService from "@/global/service/class.js";
 import courseService from "@/global/service/course.js";
-
+import teacherService from "@/global/service/teacher.js";
 export default {
   data() {
     return {
@@ -95,6 +105,9 @@ export default {
         name: [{ required: true, message: "请输入班级名称", trigger: "blur" }],
         course_id: [
           { required: true, message: "请输入关联课程", trigger: "blur" }
+        ],
+        teacher_id: [
+          { required: true, message: "请输入带课老师", trigger: "blur" }
         ],
         start_at: [
           { required: true, message: "请输入开始时间", trigger: "blur" }
@@ -117,14 +130,27 @@ export default {
         end_at: "",
         lesson_count: "",
         price: "",
-        description: ""
-      }
+        description: "",
+        teacher_id: ""
+      },
+      teacherData: []
     };
   },
   created() {
     this.getCourse();
+    this.getTeacher();
   },
   methods: {
+    getTeacher() {
+      teacherService
+        .list()
+        .then(res => {
+          this.teacherData = res;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     getCourse() {
       courseService.list().then(res => {
         this.courses = res;
@@ -140,10 +166,11 @@ export default {
             course_id: this.formData.course_id,
             lesson_count: this.formData.lesson_count,
             price: this.formData.price,
-            description: this.formData.description
+            description: this.formData.description,
+            teacher_id: this.formData.teacher_id
           };
           this.disabled = true;
-
+          console.log(params);
           classService
             .create(params)
             .then(res => {

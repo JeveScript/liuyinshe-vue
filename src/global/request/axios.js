@@ -28,7 +28,8 @@ axios.interceptors.response.use(
       case res.data.code == 0:
         console.log(123);
         Message.error("服务器错误");
-        return res;
+        // return res;
+        return Promise.reject(res);
       default:
         console.log(123);
         return res.data;

@@ -22,7 +22,8 @@ const API = {
   teacherShow: id => `${PREFIX}/teacher/${id}`,
   newDateLesson: `${PREFIX}/nowdate/lesson`,
   userS: `${PREFIX}/userS`,
-  qiniuToken: `${PREFIX}/qiniu/token`
+  qiniuToken: `${PREFIX}/qiniu/token`,
+  note: `${PREFIX}/note`
 };
 
 export default API;

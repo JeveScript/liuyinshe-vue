@@ -9,7 +9,7 @@
             <el-table :data="noteData" style="width: 100%">
               <el-table-column prop="name" label="姓名"> </el-table-column>
               <el-table-column prop="phone" label="手机"> </el-table-column>
-              <el-table-column prop="text" label="短信"> </el-table-column>
+              <el-table-column prop="content" label="短信"> </el-table-column>
               <el-table-column prop="type" label="类型"> </el-table-column>
               <el-table-column prop="state" label="状态">
                 <template slot-scope="scope">
@@ -30,7 +30,7 @@
                 :current-page.sync="notePagination.currentPage"
                 :page-size="notePagination.pageSize"
                 :total="notePagination.total"
-                @current-change="getUserData"
+                @current-change="getNoteDate"
               >
               </el-pagination>
             </div>
@@ -181,7 +181,7 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import userService from "@/global/service/user.js";
 import noteService from "@/global/service/note.js";
-
+import dateFunction from "@/utils/authcode.js";
 export default {
   data() {
     return {
@@ -233,6 +233,7 @@ export default {
   created() {
     this.getUserData();
     this.getNoteDate();
+    console.log(dateFunction);
   },
   methods: {
     getNoteDate() {
@@ -251,6 +252,7 @@ export default {
             res.notePagination.current_page
           );
           this.notePagination.total = Number(res.notePagination.total);
+          console.log(this.notePagination, res.notePagination.total);
         })
         .finally(() => {
           this.loading = false;
@@ -271,6 +273,7 @@ export default {
           this.pagination.pageSize = Number(res.pagination.page_size);
           this.pagination.currentPage = Number(res.pagination.current_page);
           this.pagination.total = Number(res.pagination.total);
+          console.log(this.pagination);
         })
         .finally(() => {
           this.loading = false;
@@ -301,16 +304,23 @@ export default {
       this.$refs.leaveForm.validate(valid => {
         if (valid) {
           let leaveForm = this.leaveForm;
+          let time =
+            new Date(leaveForm.time).getHours() +
+            ":" +
+            new Date(leaveForm.time).getMinutes();
+          let date = dateFunction.formatDate(leaveForm.date);
           let params = {
-            user_id: row.id,
-            userName: row.name,
+            noteJson: {
+              name: row.name,
+              className: leaveForm.className,
+              date: date,
+              time: time,
+              phone: leaveForm.phone
+            },
             userPhone: row.phone,
-            className: leaveForm.className,
-            date: leaveForm.date,
-            time: leaveForm.time,
-            teacherPhone: leaveForm.phone,
-            TemplateCode: "SMS_173760644",
-            text: `亲爱的${row.name}同学，你的报名的${leaveForm.className}课程于${leaveForm.date}-${leaveForm.time}的课时请假申请已确认，请注意安排补课、调课时间，有问题可直接联系${leaveForm.phone}，谢谢。`,
+            user_id: row.id,
+            template_code: "SMS_173760644",
+            content: `亲爱的${row.name}同学，你的报名的${leaveForm.className}课程于${date}-${time}的课时请假申请已确认，请注意安排补课、调课时间，有问题可直接联系${leaveForm.phone}，谢谢。`,
             type: "请假"
           };
           noteService.sendNote(params).then(res => {

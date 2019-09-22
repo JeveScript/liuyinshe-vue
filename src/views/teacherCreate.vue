@@ -33,9 +33,9 @@
               >
                 <!-- <image class="teacher-image" :src="article.imageUrl"></image> -->
                 <el-upload
+                  action=""
                   class="avatar-uploader"
                   :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
                   :http-request="teacherImage"
                 >
@@ -90,7 +90,6 @@ const uploadConfig = {
   name: "image_url",
   size: 500, // 图片大小，单位为Kb, 1M = 1024Kb
   accept: "image/png, image/gif, image/jpeg", // 可选 可上传的图片格式
-  TOKEN_API: "https://www.jevescript.com/api/qiniu-uploadtoken",
   QINIU_API: "http://upload-z2.qiniup.com"
 };
 const toolbarOptions = [
@@ -109,6 +108,7 @@ const toolbarOptions = [
   ["clean"],
   ["link", "image", "video"]
 ];
+
 const handlers = {
   image: function(value) {
     let fileInput = document.createElement("input");
@@ -121,35 +121,11 @@ const handlers = {
         fileInput.value = "";
         return;
       }
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          const key = "test/" + Date.now() + "_" + file.name;
-          // 获取 TOKEN
-          let domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(res => {
-              let imageUrl = "http://" + domain + "/" + res.key;
-              let length = this.quill.getSelection(true).index;
-              this.quill.insertEmbed(length, "image", imageUrl);
-              this.quill.setSelection(length + 1);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        let length = this.quill.getSelection(true).index;
+        this.quill.insertEmbed(length, "image", res);
+        this.quill.setSelection(length + 1);
+      });
     });
     fileInput.click();
   }
@@ -195,7 +171,6 @@ export default {
     beforeAvatarUpload: function(file) {
       //  const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!');
       // }
@@ -206,34 +181,9 @@ export default {
     },
     teacherImage: function(files) {
       let file = files.file;
-      let domain;
-      const key = "test/" + Date.now() + "_" + file.name;
-      // 获取 TOKEN
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(ImageRes => {
-              let image_url = "http://" + domain + "/" + ImageRes.key;
-              this.teacherFrom.imageUrl = image_url;
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(files.file).then(res => {
+        this.teacherFrom.imageUrl = res;
+      });
     },
     addTeacher: function() {
       this.$refs.teacherFrom.validate(valid => {

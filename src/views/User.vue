@@ -34,6 +34,13 @@
               >
             </template>
           </el-table-column>
+          <el-table-column prop="status" label="性别">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.status === 1 ? '' : 'success'">
+                {{ scope.row.status === 1 ? "在学" : "休假" }}</el-tag
+              >
+            </template>
+          </el-table-column>
           <el-table-column prop="birthday" label="生日" />
           <el-table-column prop="sms_name" label="紧急联系人" />
           <el-table-column prop="sms_phone" label="紧急电话" />

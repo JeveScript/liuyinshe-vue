@@ -1,9 +1,14 @@
 import request from "@/global/request/axios";
 import API from "@/global/request/api";
+import DataStore from "@/global/storage/index.js";
 
 const managerService = {
-  login: function(params) {
-    return request.post(API.authLogin, params);
+  login: async function(params) {
+    return request.post(API.authLogin, params).then(res => {
+      DataStore.setToken(res.token);
+      DataStore.setUser_name(res.userInfo.user_name);
+      DataStore.setUser_id(res.userInfo.user_id);
+    });
   },
   create: function(params) {
     return request.post(API.manager, params);

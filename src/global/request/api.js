@@ -23,7 +23,9 @@ const API = {
   newDateLesson: `${PREFIX}/nowdate/lesson`,
   userS: `${PREFIX}/userS`,
   qiniuToken: `${PREFIX}/qiniu/token`,
-  note: `${PREFIX}/note`
+  note: `${PREFIX}/note`,
+  // noteShow: `${PREFIX}/note/show`
+  QINIU_API: "http://upload-z2.qiniup.com"
 };
 
 export default API;

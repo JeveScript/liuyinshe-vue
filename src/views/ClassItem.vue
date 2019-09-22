@@ -130,7 +130,6 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import classService from "@/global/service/class.js";
 import userService from "@/global/service/user.js";
-
 export default {
   data() {
     return {

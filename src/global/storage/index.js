@@ -36,13 +36,23 @@ class DataStore {
     }
     return DataStore.instance;
   }
-
+  setToken(token) {
+    this.storage.set("token", token);
+  }
   getToken() {
     return this.storage.get("token");
   }
-
-  setToken(token) {
-    this.storage.set("token", token);
+  setUser_id(user_id) {
+    this.storage.set("user_id", user_id);
+  }
+  getUser_id() {
+    return this.storage.get("user_id");
+  }
+  setUser_name(user_name) {
+    this.storage.set("user_name", user_name);
+  }
+  getUser_name() {
+    return this.storage.get("user_name");
   }
   clear() {
     localStorage.clear();

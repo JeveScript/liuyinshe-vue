@@ -275,7 +275,8 @@ export default {
             end_at: this.formData.end_at,
             course_id: this.formData.course_id,
             status: this.formData.status,
-            description: this.formData.description
+            description: this.formData.description,
+            teacher_id: this.formData.teacher_id
           };
           this.disabled = true;
           let id = this.$route.params.id;

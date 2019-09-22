@@ -37,9 +37,9 @@
                     >
                       <!-- <image class="teacher-image" :src="article.imageUrl"></image> -->
                       <el-upload
+                        action=""
                         class="avatar-uploader"
                         :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
                         :http-request="teacherImage"
                       >
@@ -148,35 +148,11 @@ const handlers = {
         fileInput.value = "";
         return;
       }
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          const key = "test/" + Date.now() + "_" + file.name;
-          // 获取 TOKEN
-          let domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(res => {
-              let imageUrl = "http://" + domain + "/" + res.key;
-              let length = this.quill.getSelection(true).index;
-              this.quill.insertEmbed(length, "image", imageUrl);
-              this.quill.setSelection(length + 1);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        let length = this.quill.getSelection(true).index;
+        this.quill.insertEmbed(length, "image", res);
+        this.quill.setSelection(length + 1);
+      });
     });
     fileInput.click();
   }
@@ -291,38 +267,9 @@ export default {
     teacherImage: function(files) {
       console.log(files);
       let file = files.file;
-      let domain;
-      const key = "test/" + Date.now() + "_" + file.name;
-      // 获取 TOKEN
-      console.log(key, uploadConfig.TOKEN_API);
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(ImageRes => {
-              // console.log(ImageRes,123123,ImageRes.key)
-              let image_url = "http://" + domain + "/" + ImageRes.key;
-              console.log(image_url);
-              this.teacherData.imageUrl = image_url;
-              console.log(this.teacherData.imageUrl, this);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        this.teacherData.imageUrl = res;
+      });
     }
   },
   components: {

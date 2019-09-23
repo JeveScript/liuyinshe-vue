@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="page-content">
       <el-card class="box-card">
-        <h3>今日请假列表</h3>
-        <el-table class="mb-20" :data="tableData" style="width: 100%">
+        <h3>请假列表</h3>
+        <el-table class="mb-20" :data="leaveData" style="width: 100%">
           <el-table-column prop="user_name" label="姓名"> </el-table-column>
           <el-table-column prop="name" label="班级名称"> </el-table-column>
           <el-table-column prop="date" label="请假日期"> </el-table-column>
@@ -56,7 +56,7 @@
             </el-table>
           </el-card>
         </el-col>
-        <el-col :span="11" push="1">
+        <el-col :span="11" :push="1">
           <el-card class="box-card">
             <h3>提醒用户列表</h3>
             <el-table :data="userSdata" style="width: 100%">
@@ -81,6 +81,7 @@ export default {
     return {
       loading: true,
       tableData: [],
+      leaveData: [],
       pagination: {
         total: 0,
         currentPage: 1,
@@ -104,22 +105,16 @@ export default {
         .userS()
         .then(res => {
           this.userSdata = res;
-          console.log(res);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getNewLsoon() {
       lessonService
         .newDate()
         .then(res => {
-          console.log(res);
           this.lessonNewDate = res;
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getLeaveData() {
       let params = {
@@ -131,7 +126,7 @@ export default {
       leaveService
         .index(params)
         .then(res => {
-          this.tableData = res.datas;
+          this.leaveData = res.datas;
           this.pagination.pageSize = Number(res.pagination.page_size);
           this.pagination.currentPage = Number(res.pagination.current_page);
           this.pagination.total = Number(res.pagination.total);
@@ -144,7 +139,6 @@ export default {
       this.changeStatus(row, index, status);
     },
     linkEditSubmit(index, row) {
-      console.log(row);
       this.$router.push({ name: "Lesson", params: { id: row.id } });
     },
     changeStatus(row, index, status) {

@@ -19,19 +19,15 @@ axios.interceptors.request.use(
 // 添加响应拦截器
 axios.interceptors.response.use(
   res => {
-    console.log(res);
     // 兼容包了一层 { code, data } 的情况
     switch (true) {
       case res.data && res.data.code === 200:
-        console.log(123);
         return res.data.data;
       case res.data.code == 0:
-        console.log(123);
         Message.error("服务器错误");
         // return res;
         return Promise.reject(res);
       default:
-        console.log(123);
         return res.data;
     }
   },

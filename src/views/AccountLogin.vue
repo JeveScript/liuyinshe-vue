@@ -34,15 +34,6 @@
                   show-password
                 ></el-input>
               </el-form-item>
-              <!-- <el-form-item prop="checked">
-                <div class="flex-cell">
-                  <el-checkbox
-                    class="flex-cell-bd"
-                    v-model="passwordFrom.checked"
-                    >自动登录</el-checkbox
-                  >
-                </div>
-              </el-form-item> -->
               <el-form-item>
                 <el-button
                   type="primary"
@@ -61,7 +52,7 @@
 
 <script>
 import managerService from "@/global/service/manager.js";
-import setStore from "@/global/storage/index.js";
+import DataStore from "@/global/storage/index.js";
 export default {
   data() {
     return {
@@ -86,9 +77,8 @@ export default {
     };
   },
   created: function() {
-    let user_name = setStore.storage.get("user_name");
-    let token = setStore.storage.get("token");
-    console.log(token, user_name);
+    let user_name = DataStore.storage.get("user_name");
+    let token = DataStore.storage.get("token");
     if (user_name && token) {
       return this.$router.replace({ name: "Dashboard" });
     }
@@ -101,17 +91,9 @@ export default {
             phone: this.passwordFrom.phone,
             password: this.passwordFrom.password
           };
-          managerService
-            .login(data)
-            .then(res => {
-              setStore.setToken(res.token);
-              setStore.storage.set("user_name", res.userInfo.user_name);
-              setStore.storage.set("user_id", res.userInfo.user_id);
-              this.$router.replace({ name: "Dashboard" });
-            })
-            .catch(() => {
-              // this.$message("登陆失败，请确认账号及密码正确");
-            });
+          managerService.login(data).then(res => {
+            this.$router.replace({ name: "Dashboard" });
+          });
         }
       });
     }

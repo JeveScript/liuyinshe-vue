@@ -167,7 +167,6 @@ export default {
         course_id: this.form.course_id,
         name: this.form.name
       };
-      console.log(params);
       let formDate = this.form.date;
       if (formDate.length) {
         params.start_at = formDate[0];

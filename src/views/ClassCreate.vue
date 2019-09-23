@@ -147,9 +147,7 @@ export default {
         .then(res => {
           this.teacherData = res;
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getCourse() {
       courseService.list().then(res => {
@@ -170,7 +168,6 @@ export default {
             teacher_id: this.formData.teacher_id
           };
           this.disabled = true;
-          console.log(params);
           classService
             .create(params)
             .then(res => {

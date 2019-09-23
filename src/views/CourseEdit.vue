@@ -27,9 +27,9 @@
               >
                 <!-- <image class="teacher-image" :src="article.course_image"></image> -->
                 <el-upload
+                  action=""
                   class="avatar-uploader"
                   :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
                   :http-request="courseImage"
                 >
@@ -119,43 +119,11 @@ const handlers = {
         fileInput.value = "";
         return;
       }
-      console.log(123);
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          console.log(123);
-
-          const key = "test/" + Date.now() + "_" + file.name;
-          // 获取 TOKEN
-          let domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          console.log(123);
-
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(res => {
-              console.log(123);
-
-              let course_image = "http://" + domain + "/" + res.key;
-              let length = this.quill.getSelection(true).index;
-              this.quill.insertEmbed(length, "image", course_image);
-              this.quill.setSelection(length + 1);
-              console.log(course_image);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        let length = this.quill.getSelection(true).index;
+        this.quill.insertEmbed(length, "image", res);
+        this.quill.setSelection(length + 1);
+      });
     });
     fileInput.click();
   }
@@ -203,9 +171,8 @@ export default {
         if (valid) {
           let params = {
             name: this.formData.name,
-            teacher: this.formData.teacher,
-            teacher_phone: this.formData.teacher_phone,
-            description: this.formData.description
+            description: this.formData.description,
+            course_image: this.formData.course_image
           };
           this.disabled = true;
           let id = this.$route.params.id;
@@ -235,35 +202,9 @@ export default {
     },
     courseImage: function(files) {
       let file = files.file;
-      let domain;
-      const key = "test/" + Date.now() + "_" + file.name;
-      // 获取 TOKEN
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(ImageRes => {
-              // console.log(ImageRes,123123,ImageRes.key)
-              let image_url = "http://" + domain + "/" + ImageRes.key;
-              this.formData.course_image = image_url;
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        this.formData.course_image = res;
+      });
     }
   },
   components: {

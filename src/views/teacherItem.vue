@@ -37,9 +37,9 @@
                     >
                       <!-- <image class="teacher-image" :src="article.imageUrl"></image> -->
                       <el-upload
+                        action=""
                         class="avatar-uploader"
                         :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
                         :http-request="teacherImage"
                       >
@@ -83,15 +83,21 @@
         <el-tab-pane label="教授班级" name="2">
           <div class="teacherItem-class">
             <h3>教授班级</h3>
-            <el-table :data="tableData" height="600" border style="width: 100%">
-              <el-table-column prop="date" label="日期" width="180">
+            <el-table :data="classData" height="600" border style="width: 100%">
+              <el-table-column prop="name" label="课程名称" width="180">
               </el-table-column>
-              <el-table-column prop="name" label="姓名" width="180">
+              <el-table-column prop="created_at" label="创建时间" width="180">
               </el-table-column>
-              <el-table-column prop="address" label="地址"> </el-table-column>
+              <el-table-column prop="start_at" label="开始时间" width="180">
+              </el-table-column>
+              <el-table-column prop="end_at" label="结束时间" width="180">
+              </el-table-column>
+
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini">查看</el-button>
+                  <el-button size="mini" @click="classTo(scope.row)"
+                    >查看</el-button
+                  >
                 </template>
               </el-table-column>
             </el-table>
@@ -148,35 +154,11 @@ const handlers = {
         fileInput.value = "";
         return;
       }
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          const key = "test/" + Date.now() + "_" + file.name;
-          // 获取 TOKEN
-          let domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(res => {
-              let imageUrl = "http://" + domain + "/" + res.key;
-              let length = this.quill.getSelection(true).index;
-              this.quill.insertEmbed(length, "image", imageUrl);
-              this.quill.setSelection(length + 1);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        let length = this.quill.getSelection(true).index;
+        this.quill.insertEmbed(length, "image", res);
+        this.quill.setSelection(length + 1);
+      });
     });
     fileInput.click();
   }
@@ -204,43 +186,7 @@ export default {
         imageUrl: [{ required: true, message: "请选择图片", trigger: "blur" }]
       },
       teacherData: {},
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      classData: [],
       editorOption: {
         modules: {
           toolbar: {
@@ -254,13 +200,19 @@ export default {
 
   created() {
     let id = this.$route.params.id;
-    console.log(id);
     teacherService.show(id).then(res => {
-      console.log(res);
-      this.teacherData = res;
+      this.teacherData = res.teacherData;
+      this.classData = res.classData;
     });
   },
   methods: {
+    classTo: function(row) {
+      const { id } = row;
+      this.$router.push({
+        name: "ClassItem",
+        params: { id }
+      });
+    },
     editTeacher: function() {
       let teacherData = this.teacherData;
       let id = this.$route.params.id;
@@ -289,40 +241,10 @@ export default {
       return isLt2M;
     },
     teacherImage: function(files) {
-      console.log(files);
       let file = files.file;
-      let domain;
-      const key = "test/" + Date.now() + "_" + file.name;
-      // 获取 TOKEN
-      console.log(key, uploadConfig.TOKEN_API);
-      qiniuService
-        .getToken()
-        .then(qiniuGet => {
-          domain = qiniuGet.domain;
-          let token = qiniuGet.uploadToken;
-          let formData = new FormData();
-          formData.append("file", file); // 文件
-          formData.append("key", key); // 在七牛存储中的路径
-          formData.append("token", token); // token
-          // 上传图片
-          return axios
-            .post(uploadConfig.QINIU_API, formData, {
-              headers: {
-                "Content-Type": "multiple/form-data"
-              }
-            })
-            .then(ImageRes => {
-              // console.log(ImageRes,123123,ImageRes.key)
-              let image_url = "http://" + domain + "/" + ImageRes.key;
-              console.log(image_url);
-              this.teacherData.imageUrl = image_url;
-              console.log(this.teacherData.imageUrl, this);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(err => {});
+      qiniuService.setDate(file).then(res => {
+        this.teacherData.imageUrl = res;
+      });
     }
   },
   components: {

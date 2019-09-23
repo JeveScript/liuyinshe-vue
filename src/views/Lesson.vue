@@ -5,10 +5,10 @@
       <h3>课时信息</h3>
       <el-form inline label-position="left" label-width="80px">
         <el-form-item label="开始时间" style="width:240px;">
-          {{ lesson.start_time }}
+          {{ lesson.date }} {{ lesson.start_time }}
         </el-form-item>
         <el-form-item label="结束时间" style="width:240px;">
-          {{ lesson.end_time }}
+          {{ lesson.date }} {{ lesson.end_time }}
         </el-form-item>
         <el-form-item label="课时状态" style="width:280px;">
           <el-select
@@ -46,6 +46,13 @@
           </template>
         </el-table-column>
         <el-table-column prop="finish_at" label="时间"> </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="informSms_log(scope.row)"
+              >通知上课</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
       <div>
         <el-button
@@ -62,7 +69,8 @@
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import lessonService from "@/global/service/lesson.js";
-
+import sms_logService from "@/global/service/sms_log.js";
+import dateFunction from "@/utils/authcode.js";
 export default {
   data() {
     return {
@@ -78,6 +86,35 @@ export default {
     this.getData();
   },
   methods: {
+    informSms_log(row) {
+      let lesson = this.lesson;
+      let time = lesson.start_time;
+      let date = lesson.date;
+      if (!time || !date) {
+        return this.$message({
+          message: "请先选择课程时间"
+        });
+      }
+      let params = {
+        sms_logJson: {
+          name: row.name,
+          className: lesson.className,
+          date: date,
+          time: time
+        },
+        userPhone: row.phone,
+        user_id: row.id,
+        template_code: "SMS_174277611",
+        content: `亲爱的${row.name}同学，你的报名的 ${lesson.className} 于 ${date} ${time} 的课时即将上课，期待您准时到来。`,
+        type: "通知上课"
+      };
+      sms_logService.sendSms_log(params).then(res => {
+        this.$message({
+          message: "发送成功",
+          type: "success"
+        });
+      });
+    },
     getData() {
       let id = this.$route.params.id;
       lessonService
@@ -119,9 +156,7 @@ export default {
           await lessonService.callnow(id, { user_id });
         });
         this.handleResetUsers();
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     },
     handleResetUsers() {
       this.users.forEach(data => {

@@ -61,6 +61,20 @@
               <el-form-item label="课程" prop="course_id" style="width:460px;">
                 {{ formData.course_name }}
               </el-form-item>
+              <el-form-item
+                label="带课老师"
+                prop="teacher_name"
+                style="width:460px;"
+              >
+                {{ formData.teacher_name }}
+              </el-form-item>
+              <el-form-item
+                label="手机号码"
+                prop="teacher_phone"
+                style="width:460px;"
+              >
+                {{ formData.teacher_phone }}
+              </el-form-item>
               <el-form-item label="状态" prop="status" style="width:460px;">
                 {{
                   formData.status
@@ -130,7 +144,6 @@
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import classService from "@/global/service/class.js";
 import userService from "@/global/service/user.js";
-
 export default {
   data() {
     return {
@@ -199,7 +212,6 @@ export default {
           this.user_id = "";
           this.$message.success("添加成功！");
           let user = this.searchUsers.find(data => data.id === user_id);
-          console.log(user, 123);
           this.users.push(user);
         })
         .catch(err => {

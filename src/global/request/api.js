@@ -1,4 +1,4 @@
-// const PREFIX = 'http://localhost:3000/api';
+// const PREFIX = 'https://api.liuyinshe.zakesi.com';
 const PREFIX = "/api";
 
 const API = {

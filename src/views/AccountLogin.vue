@@ -3,9 +3,9 @@
     <div class="account-login-bd">
       <div class="company-info-container">
         <img class="company-info-logo" src="~@/assets/logo.png" />
-        <span class="company-info-name">Vue Admin</span>
+        <span class="company-info-name">留音社</span>
       </div>
-      <div class="company-info-desc">小具影响力的 Web 设计规范</div>
+      <div class="company-info-desc">规范的音乐教学</div>
       <div class="account-login-mainer">
         <div class="login-form-container">
           <div class="login-form-password">

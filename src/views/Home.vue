@@ -12,7 +12,11 @@
       </div>
 
       <nav class="link-list">
-        <a href="javascript:;" class="link-list_item">留音社</a>
+        <a href="javascript:;" 
+        class="link-list_item"
+         @click="arrive"
+          data-id="background_container"
+        >留音社</a>
         <a
           href="javascript:;"
           class="link-list_item"
@@ -308,7 +312,6 @@
     <footer class="footer-container">
       <p class="footer-title">
         广东留音社:中华人民共和国广东省广州市增城区
-        <router-link to="/login"><span>I I</span></router-link>
       </p>
     </footer>
   </div>

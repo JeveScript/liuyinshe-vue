@@ -8,7 +8,7 @@ const teacherService = {
   setDate: function(file) {
     return new Promise((resolve, reject) => {
       this.getToken().then(qiniuGet => {
-        const key = "test/" + Date.now() + "_" + file.name;
+        const key = "liuyinshe/" + Date.now() + "_" + file.name;
         // 获取 TOKEN
         let domain = qiniuGet.domain;
         let token = qiniuGet.uploadToken;

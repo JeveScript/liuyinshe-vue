@@ -10,14 +10,16 @@
       <div class="bar-info-container">
         <i class="el-icon-question"></i>
       </div>
-      <el-dropdown style="height: 100%;">
+      <el-dropdown style="height: 100%;" @command="handleMenu">
         <div class="bar-info-container">
           <i class="el-icon-user-solid userInfo-avatar"></i>
-          <span class="userInfo-name">Jax</span>
+          <span class="userInfo-name">{{ user_name }}</span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item icon="el-icon-video-pause">退出</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-video-pause" command="secede"
+            >退出</el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -25,16 +27,39 @@
 </template>
 
 <script>
+import getStore from "@/global/storage/index.js";
 export default {
+  data() {
+    return {
+      user_name: ""
+    };
+  },
   props: {
     collapse: {
       type: Boolean,
       default: false
     }
   },
+  created: function() {
+    let user_name = getStore.storage.get("user_name");
+    let token = getStore.storage.get("token");
+    console.log(token, user_name);
+    if (!user_name || !token) {
+      return this.$router.replace({ name: "AccountLogin" });
+    }
+    this.user_name = user_name;
+  },
   methods: {
     handleCollapse() {
       this.$emit("update:collapse", !this.collapse);
+    },
+    handleMenu: function(value) {
+      if (value == "secede") {
+        getStore.storage.delete("token");
+        getStore.storage.delete("user_name");
+        getStore.storage.delete("user_id");
+        return this.$router.replace({ name: "AccountLogin" });
+      }
     }
   }
 };

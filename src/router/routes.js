@@ -36,6 +36,13 @@ const ClassItem = () =>
 const Lesson = () =>
   import(/* webpackChunkName: "Class" */ "@/views/Lesson.vue");
 const Leave = () => import(/* webpackChunkName: "Leave" */ "@/views/Leave.vue");
+const teacher = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacher.vue");
+const teacherCreate = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacherCreate.vue");
+const teacherItem = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/teacherItem.vue");
+const note = () => import(/* webpackChunkName: "teacher" */ "@/views/note.vue");
 
 export default [
   {
@@ -67,6 +74,90 @@ export default [
             title: "概况"
           }
         }
+      },
+      {
+        path: "/admin/manager",
+        name: "ManagerRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "Manager" },
+        meta: {
+          nav: {
+            icon: "el-icon-user",
+            title: "管理员"
+          },
+          breadcrumb: {
+            title: "管理员"
+          }
+        },
+        children: [
+          {
+            path: "/admin/manager",
+            name: "Manager",
+            component: Manager
+          },
+          {
+            path: "/admin/manager/create",
+            name: "ManagerCreate",
+            component: ManagerCreate,
+            meta: {
+              breadcrumb: {
+                title: "新建"
+              }
+            }
+          },
+          {
+            path: "/admin/manager/:id/edit",
+            name: "ManagerEdit",
+            component: ManagerEdit,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: "/admin/teacher",
+        name: "TeacherRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "Teacher" },
+        meta: {
+          nav: {
+            icon: "el-icon-user",
+            title: "老师"
+          },
+          breadcrumb: {
+            title: "老师"
+          }
+        },
+        children: [
+          {
+            path: "/admin/teacher",
+            name: "Teacher",
+            component: teacher
+          },
+          {
+            path: "/admin/teacher/create",
+            name: "TeacherCreate",
+            component: teacherCreate,
+            meta: {
+              breadcrumb: {
+                title: "新建"
+              }
+            }
+          },
+          {
+            path: "/admin/teacher/:id/edit",
+            name: "TeacherEdit",
+            component: teacherItem,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          }
+        ]
       },
       {
         path: "/admin/user",
@@ -152,6 +243,21 @@ export default [
           nav: {
             icon: "el-icon-bank-card",
             title: "收支"
+          }
+        }
+      },
+      {
+        path: "/note",
+        name: "note",
+        component: note,
+        meta: {
+          breadcrumb: {
+            title: "短信通知",
+            replace: false
+          },
+          nav: {
+            icon: "el-icon-message",
+            title: "短信通知"
           }
         }
       },
@@ -259,48 +365,6 @@ export default [
             meta: {
               breadcrumb: {
                 title: "课时"
-              }
-            }
-          }
-        ]
-      },
-      {
-        path: "/admin/manager",
-        name: "ManagerRoot",
-        component: { render: h => h("router-view") },
-        redirect: { name: "Manager" },
-        meta: {
-          nav: {
-            icon: "el-icon-user",
-            title: "管理员"
-          },
-          breadcrumb: {
-            title: "管理员"
-          }
-        },
-        children: [
-          {
-            path: "/admin/manager",
-            name: "Manager",
-            component: Manager
-          },
-          {
-            path: "/admin/manager/create",
-            name: "ManagerCreate",
-            component: ManagerCreate,
-            meta: {
-              breadcrumb: {
-                title: "新建"
-              }
-            }
-          },
-          {
-            path: "/admin/manager/:id/edit",
-            name: "ManagerEdit",
-            component: ManagerEdit,
-            meta: {
-              breadcrumb: {
-                title: "详情"
               }
             }
           }

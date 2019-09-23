@@ -16,7 +16,10 @@
             @change="handleChangeStatus"
             placeholder="课时状态"
           >
-            <el-option :label="'已结束'" :value="1"></el-option>
+            <el-option :label="'进行中'" :value="0"></el-option>
+            <el-option :label="'取消'" :value="1"></el-option>
+            <el-option :label="'已完成'" :value="2"></el-option>
+            <!-- <el-option :label="'已结束'" :value="1"></el-option> -->
           </el-select>
         </el-form-item>
       </el-form>
@@ -80,8 +83,8 @@ export default {
       lessonService
         .list(id)
         .then(res => {
-          this.users = res.data.users;
-          this.lesson = res.data.lesson;
+          this.users = res.users;
+          this.lesson = res.lesson;
         })
         .finally(() => {
           this.loading = false;
@@ -123,7 +126,7 @@ export default {
     handleResetUsers() {
       this.users.forEach(data => {
         if (this.selectUserIds.includes(data.id)) {
-          data.status = 2;
+          data.status = 1;
           data.finish_at = new Date().toJSON();
         }
       });

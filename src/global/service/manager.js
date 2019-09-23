@@ -2,6 +2,9 @@ import request from "@/global/request/axios";
 import API from "@/global/request/api";
 
 const managerService = {
+  login: function(params) {
+    return request.post(API.authLogin, params);
+  },
   create: function(params) {
     return request.post(API.manager, params);
   },

@@ -1,41 +1,47 @@
 <template>
   <div class="page-container">
-    <v-breadcrumb />
-    <div class="page-content" v-loading="loading">
+    <v-breadcrumb></v-breadcrumb>
+    <div class="page-content">
       <el-form
-        :model="formData"
-        :rules="rules"
-        ref="userForm"
         label-position="left"
         label-width="160px"
+        :model="teacherFrom"
+        :rules="rules"
+        ref="teacherFrom"
       >
-        <h3>课程信息</h3>
-
         <el-row :gutter="20">
           <el-col :lg="10">
             <el-card class="box-card">
-              <el-form-item label="课程名称" prop="name" style="width:460px;">
-                <el-input
-                  v-model="formData.name"
-                  placeholder="请输入课程名称"
-                />
+              <el-form-item
+                label="老师名称"
+                prop="teacher_name"
+                style="width:400px"
+              >
+                <el-input v-model="teacherFrom.teacher_name"></el-input>
               </el-form-item>
               <el-form-item
-                label="课程图片"
-                prop="course_image"
+                label="联系方式"
+                prop="teacher_phone"
+                style="width:400px"
+              >
+                <el-input v-model="teacherFrom.teacher_phone"></el-input>
+              </el-form-item>
+              <el-form-item
+                label="老师头像"
+                prop="imageUrl"
                 style="width:600px; "
               >
-                <!-- <image class="teacher-image" :src="article.course_image"></image> -->
+                <!-- <image class="teacher-image" :src="article.imageUrl"></image> -->
                 <el-upload
                   class="avatar-uploader"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
-                  :http-request="courseImage"
+                  :http-request="teacherImage"
                 >
                   <img
-                    v-if="formData.course_image"
-                    :src="formData.course_image"
+                    v-if="teacherFrom.imageUrl"
+                    :src="teacherFrom.imageUrl"
                     class="avatar"
                   />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -46,13 +52,13 @@
           <el-col :lg="14">
             <el-card class="box-card">
               <el-form-item
-                label="课程简介"
-                prop="description"
+                label="老师简介"
+                prop="teacher_intro"
                 style="width:600px; "
               >
                 <quill-editor
                   class="quill-editor"
-                  v-model="formData.description"
+                  v-model="teacherFrom.teacher_intro"
                   ref="myQuillEditor"
                   :options="editorOption"
                 >
@@ -61,27 +67,23 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-button
-          type="primary"
-          @click="handleCreatecourse"
-          :disabled="disabled"
-          style="margin-top:30px;"
-          >编辑</el-button
-        >
       </el-form>
+      <el-button type="primary" @click="addTeacher" style="margin-top:30px;"
+        >添加</el-button
+      >
     </div>
   </div>
 </template>
-
-<script type="text/javascript">
+<script>
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
-import courseService from "@/global/service/course.js";
+import teacherService from "@/global/service/teacher.js";
 import qiniuService from "@/global/service/qiniu.js";
 
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
+import * as Quill from "quill";
 import axios from "axios";
 
 const uploadConfig = {
@@ -105,7 +107,7 @@ const toolbarOptions = [
   [{ font: [] }],
   [{ align: [] }],
   ["clean"],
-  ["link", "image"]
+  ["link", "image", "video"]
 ];
 const handlers = {
   image: function(value) {
@@ -119,12 +121,9 @@ const handlers = {
         fileInput.value = "";
         return;
       }
-      console.log(123);
       qiniuService
         .getToken()
         .then(qiniuGet => {
-          console.log(123);
-
           const key = "test/" + Date.now() + "_" + file.name;
           // 获取 TOKEN
           let domain = qiniuGet.domain;
@@ -134,8 +133,6 @@ const handlers = {
           formData.append("key", key); // 在七牛存储中的路径
           formData.append("token", token); // token
           // 上传图片
-          console.log(123);
-
           return axios
             .post(uploadConfig.QINIU_API, formData, {
               headers: {
@@ -143,13 +140,10 @@ const handlers = {
               }
             })
             .then(res => {
-              console.log(123);
-
-              let course_image = "http://" + domain + "/" + res.key;
+              let imageUrl = "http://" + domain + "/" + res.key;
               let length = this.quill.getSelection(true).index;
-              this.quill.insertEmbed(length, "image", course_image);
+              this.quill.insertEmbed(length, "image", imageUrl);
               this.quill.setSelection(length + 1);
-              console.log(course_image);
             })
             .catch(e => {
               console.log(e);
@@ -164,21 +158,28 @@ const handlers = {
 export default {
   data() {
     return {
-      disabled: false,
-      loading: false,
       rules: {
-        name: [{ required: true, message: "请输入课程名称", trigger: "blur" }],
-        description: [
-          { required: true, message: "请输入课程描述", trigger: "blur" }
+        teacher_phone: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          {
+            pattern: /^1[3456789]\d{9}$/,
+            message: "目前只支持中国大陆的手机号码",
+            trigger: "blur"
+          }
         ],
-        course_image: [
-          { required: true, message: "请选择课程图片", trigger: "blur" }
-        ]
+        teacher_name: [
+          { required: true, message: "请输入姓名", trigger: "blur" }
+        ],
+        teacher_intro: [
+          { required: true, message: "请输入简介", trigger: "blur" }
+        ],
+        imageUrl: [{ required: true, message: "请选择图片", trigger: "blur" }]
       },
-      formData: {
-        name: "",
-        description: "",
-        course_image: ""
+      teacherFrom: {
+        teacher_name: "",
+        teacher_phone: "",
+        teacher_intro: "",
+        imageUrl: ""
       },
       editorOption: {
         modules: {
@@ -190,37 +191,7 @@ export default {
       }
     };
   },
-  created() {
-    let id = this.$route.params.id;
-    courseService.show(id).then(res => {
-      let userInfo = res;
-      this.formData = userInfo;
-    });
-  },
   methods: {
-    handleCreatecourse() {
-      this.$refs.userForm.validate(valid => {
-        if (valid) {
-          let params = {
-            name: this.formData.name,
-            teacher: this.formData.teacher,
-            teacher_phone: this.formData.teacher_phone,
-            description: this.formData.description
-          };
-          this.disabled = true;
-          let id = this.$route.params.id;
-          courseService
-            .update(id, params)
-            .then(() => {
-              this.$message.success("编辑成功");
-              this.$router.push({ name: "Course" });
-            })
-            .finally(() => {
-              this.disabled = false;
-            });
-        }
-      });
-    },
     beforeAvatarUpload: function(file) {
       //  const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -233,7 +204,7 @@ export default {
       }
       return isLt2M;
     },
-    courseImage: function(files) {
+    teacherImage: function(files) {
       let file = files.file;
       let domain;
       const key = "test/" + Date.now() + "_" + file.name;
@@ -255,15 +226,39 @@ export default {
               }
             })
             .then(ImageRes => {
-              // console.log(ImageRes,123123,ImageRes.key)
               let image_url = "http://" + domain + "/" + ImageRes.key;
-              this.formData.course_image = image_url;
+              this.teacherFrom.imageUrl = image_url;
             })
             .catch(e => {
               console.log(e);
             });
         })
         .catch(err => {});
+    },
+    addTeacher: function() {
+      this.$refs.teacherFrom.validate(valid => {
+        if (valid) {
+          let params = {
+            teacher_name: this.teacherFrom.teacher_name,
+            teacher_phone: this.teacherFrom.teacher_phone,
+            teacher_intro: this.teacherFrom.teacher_intro,
+            imageUrl: this.teacherFrom.imageUrl
+          };
+          this.disabled = true;
+          teacherService
+            .create(params)
+            .then(() => {
+              this.$message.success("创建成功");
+              this.$router.push({ name: "Teacher" });
+            })
+            .catch(err => {
+              this.$message("创建失败,查看用户是否存在");
+            })
+            .finally(() => {
+              this.disabled = false;
+            });
+        }
+      });
     }
   },
   components: {
@@ -273,7 +268,7 @@ export default {
 };
 </script>
 
-<style type="text/css">
+<style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

@@ -17,7 +17,13 @@ const API = {
   lessonItem: id => `${PREFIX}/lesson/${id}`,
   classAddUser: id => `${PREFIX}/class/${id}/adduser`,
   lessonStatus: id => `${PREFIX}/lesson/${id}/status`,
-  lessonCallNow: id => `${PREFIX}/lesson/${id}/callnow`
+  lessonCallNow: id => `${PREFIX}/lesson/${id}/callnow`,
+  teacher: `${PREFIX}/teacher`,
+  teacherShow: id => `${PREFIX}/teacher/${id}`,
+  newDateLesson: `${PREFIX}/nowdate/lesson`,
+  userS: `${PREFIX}/userS`,
+  qiniuToken: `${PREFIX}/qiniu/token`,
+  note: `${PREFIX}/note`
 };
 
 export default API;

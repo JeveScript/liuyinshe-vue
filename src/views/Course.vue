@@ -9,9 +9,6 @@
       </div>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="名称"> </el-table-column>
-        <el-table-column prop="teacher" label="老师"> </el-table-column>
-        <el-table-column prop="teacher_phone" label="老师电话">
-        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="handleEditCourse(scope.row)"
@@ -45,7 +42,7 @@ export default {
     courseService
       .list()
       .then(res => {
-        let course = res.data;
+        let course = res;
         this.tableData = course;
       })
       .finally(() => {

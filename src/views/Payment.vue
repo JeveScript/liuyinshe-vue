@@ -130,12 +130,10 @@ export default {
       paymentService
         .list(params)
         .then(res => {
-          this.tableData = res.data.datas;
-          this.pagination.pageSize = Number(res.data.pagination.page_size);
-          this.pagination.currentPage = Number(
-            res.data.pagination.current_page
-          );
-          this.pagination.total = Number(res.data.pagination.total);
+          this.tableData = res.datas;
+          this.pagination.pageSize = Number(res.pagination.page_size);
+          this.pagination.currentPage = Number(res.pagination.current_page);
+          this.pagination.total = Number(res.pagination.total);
         })
         .finally(() => {
           this.loading = false;

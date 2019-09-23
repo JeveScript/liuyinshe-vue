@@ -51,12 +51,24 @@
             placeholder="请输入紧急联系人手机号"
           />
         </el-form-item>
+        <el-form-item label="学生状态" style="width:460px;">
+          <el-radio-group v-model="formData.status">
+            <el-radio :label="1">在学</el-radio>
+            <el-radio :label="2">休假</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="学员地址" style="width:460px;">
+          <el-input v-model="formData.site" placeholder="请输入学员地址" />
+        </el-form-item>
+        <el-form-item label="学校" style="width:460px;">
+          <el-input v-model="formData.school" placeholder="请输入学校" />
+        </el-form-item>
         <el-form-item>
           <el-button
             type="primary"
             @click="handleCreateManager"
             :disabled="disabled"
-            >添加</el-button
+            >编辑</el-button
           >
         </el-form-item>
       </el-form>
@@ -105,14 +117,17 @@ export default {
         sex: "",
         birthday: "",
         sms_name: "",
-        sms_phone: ""
+        sms_phone: "",
+        status: "",
+        site: "",
+        school: ""
       }
     };
   },
   created() {
     let id = this.$route.params.id;
     userService.show(id).then(res => {
-      let userInfo = res.data.user;
+      let userInfo = res.user;
       this.formData = userInfo;
     });
   },
@@ -126,7 +141,10 @@ export default {
             sex: this.formData.sex,
             birthday: this.formData.birthday,
             sms_name: this.formData.sms_name,
-            sms_phone: this.formData.sms_phone
+            sms_phone: this.formData.sms_phone,
+            status: this.formData.status,
+            site: this.formData.site,
+            school: this.formData.school
           };
           this.disabled = true;
           let id = this.$route.params.id;

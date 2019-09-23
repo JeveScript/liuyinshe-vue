@@ -7,7 +7,7 @@
           >添加管理员</el-button
         >
       </div>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" height="600" border>
         <el-table-column prop="phone" label="账户"> </el-table-column>
         <el-table-column prop="name" label="姓名"> </el-table-column>
         <el-table-column label="操作">
@@ -43,7 +43,7 @@ export default {
     managerService
       .list()
       .then(res => {
-        let manager = res.data;
+        let manager = res;
         this.tableData = manager;
       })
       .finally(() => {

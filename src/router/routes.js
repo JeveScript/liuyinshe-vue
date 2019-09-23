@@ -42,7 +42,8 @@ const teacherCreate = () =>
   import(/* webpackChunkName: "teacher" */ "@/views/teacherCreate.vue");
 const teacherItem = () =>
   import(/* webpackChunkName: "teacher" */ "@/views/teacherItem.vue");
-const note = () => import(/* webpackChunkName: "teacher" */ "@/views/note.vue");
+const sms_log = () =>
+  import(/* webpackChunkName: "teacher" */ "@/views/sms_log.vue");
 
 export default [
   {
@@ -247,9 +248,9 @@ export default [
         }
       },
       {
-        path: "/note",
-        name: "note",
-        component: note,
+        path: "/sms_log",
+        name: "sms_log",
+        component: sms_log,
         meta: {
           breadcrumb: {
             title: "短信通知",

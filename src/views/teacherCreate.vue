@@ -180,7 +180,6 @@ export default {
       return isLt2M;
     },
     teacherImage: function(files) {
-      let file = files.file;
       qiniuService.setDate(files.file).then(res => {
         this.teacherFrom.imageUrl = res;
       });

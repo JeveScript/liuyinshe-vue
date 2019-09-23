@@ -250,9 +250,7 @@ export default {
         .then(res => {
           this.teacherData = res;
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getClassInfo() {
       let id = this.$route.params.id;

@@ -6,7 +6,7 @@
         <el-tabs v-model="activeName">
           <el-tab-pane label="短信列表" name="1">
             <h3>短信列表</h3>
-            <el-table :data="noteData" style="width: 100%">
+            <el-table :data="sms_logData" style="width: 100%">
               <el-table-column prop="name" label="姓名"> </el-table-column>
               <el-table-column prop="phone" label="手机"> </el-table-column>
               <el-table-column prop="content" label="短信"> </el-table-column>
@@ -24,13 +24,13 @@
             </el-table>
             <div>
               <el-pagination
-                v-if="notePagination.total > notePagination.pageSize"
+                v-if="sms_logPagination.total > sms_logPagination.pageSize"
                 background
                 layout="prev, pager, next"
-                :current-page.sync="notePagination.currentPage"
-                :page-size="notePagination.pageSize"
-                :total="notePagination.total"
-                @current-change="getNoteDate"
+                :current-page.sync="sms_logPagination.currentPage"
+                :page-size="sms_logPagination.pageSize"
+                :total="sms_logPagination.total"
+                @current-change="getSms_logDate"
               >
               </el-pagination>
             </div>
@@ -150,7 +150,7 @@
                   <el-button
                     size="mini"
                     type="danger"
-                    @click="sendNote(scope.$index, scope.row)"
+                    @click="sendSms_log(scope.$index, scope.row)"
                     >发送通知</el-button
                   >
                 </template>
@@ -180,7 +180,7 @@
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import userService from "@/global/service/user.js";
-import noteService from "@/global/service/note.js";
+import sms_logService from "@/global/service/sms_log.js";
 import dateFunction from "@/utils/authcode.js";
 export default {
   data() {
@@ -188,14 +188,14 @@ export default {
       loading: false,
       activeName: "2",
       loading: true,
-      noteData: [],
+      sms_logData: [],
       userData: [],
       pagination: {
         total: 0,
         currentPage: 1,
         pageSize: 10
       },
-      notePagination: {
+      sms_logPagination: {
         total: 0,
         currentPage: 1,
         pageSize: 10
@@ -232,27 +232,27 @@ export default {
   },
   created() {
     this.getUserData();
-    this.getNoteDate();
-    console.log(dateFunction);
+    this.getSms_logDate();
   },
   methods: {
-    getNoteDate() {
+    getSms_logDate() {
       let params = {
-        current_page: this.notePagination.currentPage,
-        page_size: this.notePagination.pageSize,
+        current_page: this.sms_logPagination.currentPage,
+        page_size: this.sms_logPagination.pageSize,
         name: this.formData.name,
         phone: this.formData.phone
       };
-      noteService
-        .showNote(params)
+      sms_logService
+        .showSms_log(params)
         .then(res => {
-          this.noteData = res.datas;
-          this.notePagination.pageSize = Number(res.notePagination.page_size);
-          this.notePagination.currentPage = Number(
-            res.notePagination.current_page
+          this.sms_logData = res.datas;
+          this.sms_logPagination.pageSize = Number(
+            res.sms_logPagination.page_size
           );
-          this.notePagination.total = Number(res.notePagination.total);
-          console.log(this.notePagination, res.notePagination.total);
+          this.sms_logPagination.currentPage = Number(
+            res.sms_logPagination.current_page
+          );
+          this.sms_logPagination.total = Number(res.sms_logPagination.total);
         })
         .finally(() => {
           this.loading = false;
@@ -273,7 +273,6 @@ export default {
           this.pagination.pageSize = Number(res.pagination.page_size);
           this.pagination.currentPage = Number(res.pagination.current_page);
           this.pagination.total = Number(res.pagination.total);
-          console.log(this.pagination);
         })
         .finally(() => {
           this.loading = false;
@@ -288,11 +287,11 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    sendNote: function(index, row) {
+    sendSms_log: function(index, row) {
       let indexs = this.radio;
       switch (Number(indexs)) {
         case 1:
-          this.sendNoteLeave(row);
+          this.sendSms_logLeave(row);
           break;
         case 2:
           break;
@@ -300,7 +299,7 @@ export default {
           this.$message.error("请选择消息模版");
       }
     },
-    sendNoteLeave: function(row) {
+    sendSms_logLeave: function(row) {
       this.$refs.leaveForm.validate(valid => {
         if (valid) {
           let leaveForm = this.leaveForm;
@@ -310,7 +309,7 @@ export default {
             new Date(leaveForm.time).getMinutes();
           let date = dateFunction.formatDate(leaveForm.date);
           let params = {
-            noteJson: {
+            sms_logJson: {
               name: row.name,
               className: leaveForm.className,
               date: date,
@@ -323,7 +322,7 @@ export default {
             content: `亲爱的${row.name}同学，你的报名的${leaveForm.className}课程于${date}-${time}的课时请假申请已确认，请注意安排补课、调课时间，有问题可直接联系${leaveForm.phone}，谢谢。`,
             type: "请假"
           };
-          noteService.sendNote(params).then(res => {
+          sms_logService.sendSms_log(params).then(res => {
             this.$message({
               message: "发送成功",
               type: "success"

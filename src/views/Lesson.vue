@@ -48,7 +48,7 @@
         <el-table-column prop="finish_at" label="时间"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="informNote(scope.row)"
+            <el-button type="text" @click="informSms_log(scope.row)"
               >通知上课</el-button
             >
           </template>
@@ -69,7 +69,7 @@
 <script type="text/javascript">
 import Breadcrumb from "@/components/BasicBreadcrumb.vue";
 import lessonService from "@/global/service/lesson.js";
-import noteService from "@/global/service/note.js";
+import sms_logService from "@/global/service/sms_log.js";
 import dateFunction from "@/utils/authcode.js";
 export default {
   data() {
@@ -86,7 +86,7 @@ export default {
     this.getData();
   },
   methods: {
-    informNote(row) {
+    informSms_log(row) {
       let lesson = this.lesson;
       let time = lesson.start_time;
       let date = lesson.date;
@@ -96,7 +96,7 @@ export default {
         });
       }
       let params = {
-        noteJson: {
+        sms_logJson: {
           name: row.name,
           className: lesson.className,
           date: date,
@@ -108,7 +108,7 @@ export default {
         content: `亲爱的${row.name}同学，你的报名的 ${lesson.className} 于 ${date} ${time} 的课时即将上课，期待您准时到来。`,
         type: "通知上课"
       };
-      noteService.sendNote(params).then(res => {
+      sms_logService.sendSms_log(params).then(res => {
         this.$message({
           message: "发送成功",
           type: "success"
@@ -156,9 +156,7 @@ export default {
           await lessonService.callnow(id, { user_id });
         });
         this.handleResetUsers();
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     },
     handleResetUsers() {
       this.users.forEach(data => {

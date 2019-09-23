@@ -105,22 +105,16 @@ export default {
         .userS()
         .then(res => {
           this.userSdata = res;
-          console.log(res);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getNewLsoon() {
       lessonService
         .newDate()
         .then(res => {
-          console.log(res);
           this.lessonNewDate = res;
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     },
     getLeaveData() {
       let params = {
@@ -145,7 +139,6 @@ export default {
       this.changeStatus(row, index, status);
     },
     linkEditSubmit(index, row) {
-      console.log(row);
       this.$router.push({ name: "Lesson", params: { id: row.id } });
     },
     changeStatus(row, index, status) {

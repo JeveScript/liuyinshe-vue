@@ -43,7 +43,6 @@ export default {
   created: function() {
     let user_name = getStore.getUser_name();
     let token = getStore.getToken();
-    console.log(token, user_name);
     if (!user_name || !token) {
       return this.$router.replace({ name: "AccountLogin" });
     }

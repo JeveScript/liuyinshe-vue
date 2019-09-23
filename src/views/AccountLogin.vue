@@ -79,7 +79,6 @@ export default {
   created: function() {
     let user_name = DataStore.storage.get("user_name");
     let token = DataStore.storage.get("token");
-    console.log(token, user_name);
     if (user_name && token) {
       return this.$router.replace({ name: "Dashboard" });
     }
@@ -93,7 +92,6 @@ export default {
             password: this.passwordFrom.password
           };
           managerService.login(data).then(res => {
-            console.log(123);
             this.$router.replace({ name: "Dashboard" });
           });
         }

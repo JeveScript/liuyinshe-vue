@@ -193,7 +193,6 @@ export default {
       return isLt2M;
     },
     courseImage: function(files) {
-      console.log(files);
       let file = files.file;
       qiniuService.setDate(file).then(res => {
         this.formData.course_image = res;

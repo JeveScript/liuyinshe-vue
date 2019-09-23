@@ -45,16 +45,12 @@ export default {
     teacherService
       .list()
       .then(res => {
-        console.log(res);
         this.teacherData = res;
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(e => {});
   },
   methods: {
     teacherItem: function(index, row) {
-      console.log(row);
       this.$router.push({
         name: "TeacherEdit",
         params: { id: row.id }

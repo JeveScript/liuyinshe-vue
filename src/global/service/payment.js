@@ -6,7 +6,6 @@ const paymentService = {
     return request.post(API.payment, params);
   },
   list: function(params) {
-    console.log(params);
     return request.get(API.payment, params);
   }
 };

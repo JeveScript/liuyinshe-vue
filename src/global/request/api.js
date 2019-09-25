@@ -24,7 +24,6 @@ const API = {
   userS: `${PREFIX}/userS`,
   qiniuToken: `${PREFIX}/qiniu/token`,
   sms_log: `${PREFIX}/sms_log`,
-  // sms_logShow: `${PREFIX}/sms_log/show`
   QINIU_API: "https://upload-z2.qiniup.com"
 };
 

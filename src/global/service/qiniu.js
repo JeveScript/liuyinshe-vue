@@ -10,9 +10,8 @@ const teacherService = {
       this.getToken().then(qiniuGet => {
         const key = "zackfair/" + Date.now() + "_" + file.name;
         // 获取 TOKEN
-        let domain = qiniuGet.domain;
+        // let domain = qiniuGet.domain;
         let token = qiniuGet.uploadToken;
-        console.log(domain, token)
         let formData = new FormData();
         formData.append("file", file); // 文件
         formData.append("key", key); // 在七牛存储中的路径

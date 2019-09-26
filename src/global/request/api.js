@@ -1,5 +1,5 @@
-// const PREFIX = 'https://api.liuyinshe.zakesi.com/api';
-const PREFIX = "/api";
+const PREFIX = 'https://api.liuyinshe.zakesi.com/api';
+// const PREFIX = "/api";
 
 const API = {
   authLogin: `${PREFIX}/auth/login`,

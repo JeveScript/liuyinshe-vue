@@ -8,10 +8,11 @@ const teacherService = {
   setDate: function(file) {
     return new Promise((resolve, reject) => {
       this.getToken().then(qiniuGet => {
-        const key = "liuyinshe/" + Date.now() + "_" + file.name;
+        const key = "zackfair/" + Date.now() + "_" + file.name;
         // 获取 TOKEN
         let domain = qiniuGet.domain;
         let token = qiniuGet.uploadToken;
+        console.log(domain, token)
         let formData = new FormData();
         formData.append("file", file); // 文件
         formData.append("key", key); // 在七牛存储中的路径
@@ -21,7 +22,7 @@ const teacherService = {
             headers: { "Content-Type": "multiple/form-data" }
           })
           .then(res => {
-            let imageUrl = "http://" + domain + "/" + res.key;
+            let imageUrl = "https://qiniu.zakesi.com/" + res.key;
             resolve(imageUrl);
           });
       });

@@ -48,6 +48,12 @@ class DataStore {
   getUser_id() {
     return this.storage.get("user_id");
   }
+  setUser_status(user_status) {
+    this.storage.set("user_status", user_status);
+  }
+  getUser_status() {
+    return this.storage.get("user_status");
+  }
   setUser_name(user_name) {
     this.storage.set("user_name", user_name);
   }

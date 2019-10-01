@@ -32,6 +32,7 @@
  * @params title
  * @params description
  */
+import getStore from "@/global/storage/index.js";
 export default {
   props: {
     breadcrumb: {
@@ -46,6 +47,13 @@ export default {
       type: String,
       default: ""
     }
+  },
+  created(){
+    let status = getStore.getUser_status();
+    let router = this.$route.matched;
+    if(router[1].meta && status == 1 && router[1].meta.jurisdiction == true){
+            return this.$router.replace({ name: "Dashboard" });
+      } 
   },
   computed: {
     breadcrumbValue() {

@@ -41,12 +41,14 @@
 
 <script>
 import routes from "@/router/routes";
+import getStore from "@/global/storage/index.js";
 
 export default {
   props: {
     collapse: {
       type: Boolean,
-      default: false
+      default: false,
+      status:null,
     }
   },
   data() {
@@ -56,6 +58,8 @@ export default {
     };
   },
   created() {
+    let status = getStore.getUser_status();
+    this.status = status;
     this.getRoutes();
   },
   watch: {
@@ -68,23 +72,29 @@ export default {
       this.filterRoutes = this.filterNavigator(routes);
     },
     filterNavigator(node) {
+      let status = this.status;
       let result = [];
       node.forEach(data => {
-        if (data.meta && data.meta.nav) {
-          let item = {
-            path: data.path,
-            name: data.name,
-            meta: data.meta
-          };
-          if (data.children) {
-            item.children = this.filterNavigator(data.children);
+        if(data.meta && status == 1 && data.meta.jurisdiction == true){
+          return 
+        }else{
+          if (data.meta && data.meta.nav) {
+            let item = {
+              path: data.path,
+              name: data.name,
+              meta: data.meta
+            };
+            if (data.children) {
+              item.children = this.filterNavigator(data.children);
+            }
+            result.push(item);
+          } else if (data.children) {
+            this.filterNavigator(data.children).forEach(item =>
+              result.push(item)
+            );
           }
-          result.push(item);
-        } else if (data.children) {
-          this.filterNavigator(data.children).forEach(item =>
-            result.push(item)
-          );
         }
+        
       });
       return result;
     },

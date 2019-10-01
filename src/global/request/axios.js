@@ -9,7 +9,7 @@ axios.interceptors.request.use(
     const newConfig = { ...config };
     const TOKEN = DataStore.getToken();
     if (TOKEN) {
-      newConfig.headers.Authorization = `Bearer ${TOKEN}`;
+      newConfig.headers.Authorization = `${TOKEN}`;
     }
     return newConfig;
   },

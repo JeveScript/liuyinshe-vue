@@ -13,8 +13,12 @@
         <el-form-item label="真实姓名" prop="name" style="width:460px;">
           <el-input v-model="formData.name" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="手机号" prop="phone" style="width:460px;">
-          <el-input v-model="formData.phone" placeholder="请输入手机号" />
+        <el-form-item label="手机号码" prop="phone" style="width:460px;">
+          <el-input v-model="formData.phone" placeholder="请输入手机号码" />
+        </el-form-item>
+        <el-form-item label="管理员权限" prop="status" style="width:460px;">
+          <el-radio v-model="formData.status" label="0">管理员</el-radio>
+          <el-radio v-model="formData.status" label="1">前台</el-radio>
         </el-form-item>
         <el-form-item label="密码" prop="phone" style="width:460px;">
           <el-input
@@ -56,12 +60,14 @@ export default {
           }
         ],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        status: [{ required: true, message: "请选择权限", trigger: "blur" }]
       },
       formData: {
         name: "",
         phone: "",
-        password: ""
+        password: "",
+        status:""
       }
     };
   },
@@ -72,7 +78,8 @@ export default {
           let params = {
             name: this.formData.name,
             phone: this.formData.phone,
-            password: this.formData.password
+            password: this.formData.password,
+            status:this.formData.status
           };
           this.disabled = true;
           managerService

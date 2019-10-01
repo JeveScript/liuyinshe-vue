@@ -19,6 +19,9 @@
               <el-form-item label="手机号" prop="phone" style="width:460px;">
                 {{ formData.phone }}
               </el-form-item>
+              <el-form-item label="余额" style="width:460px;">
+                {{ formData.balance }} 元
+              </el-form-item>
               <el-form-item
                 label="紧急联系人姓名"
                 prop="sms_name"

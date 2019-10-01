@@ -97,12 +97,12 @@ export default {
   created() {
     this.getLeaveData();
     this.getNewLsoon();
-    this.getUserS();
+    this.getPauper();
   },
   methods: {
-    getUserS() {
+    getPauper() {
       userService
-        .userS()
+        .pauper()
         .then(res => {
           this.userSdata = res;
         })

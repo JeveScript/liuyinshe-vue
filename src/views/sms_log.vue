@@ -87,9 +87,9 @@
                     </el-form-item>
                   </el-form> </el-card
               ></el-col>
+              <!-- <el-col :lg="6"><el-card class="box-card"></el-card></el-col>
               <el-col :lg="6"><el-card class="box-card"></el-card></el-col>
-              <el-col :lg="6"><el-card class="box-card"></el-card></el-col>
-              <el-col :lg="6"><el-card class="box-card"></el-card></el-col>
+              <el-col :lg="6"><el-card class="box-card"></el-card></el-col> -->
             </el-row>
             <div>
               <el-form label-position="right" inline label-width="80px">
@@ -169,8 +169,8 @@
               </el-pagination>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="角色管理" name="3">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿" name="4">定时任务补偿</el-tab-pane>
+          <!-- <el-tab-pane label="角色管理" name="3">角色管理</el-tab-pane>
+          <el-tab-pane label="定时任务补偿" name="4">定时任务补偿</el-tab-pane> -->
         </el-tabs>
       </div>
     </div>

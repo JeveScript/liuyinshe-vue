@@ -88,7 +88,8 @@ export default [
           },
           breadcrumb: {
             title: "管理员"
-          }
+          },
+          jurisdiction: true
         },
         children: [
           {
@@ -130,7 +131,8 @@ export default [
           },
           breadcrumb: {
             title: "老师"
-          }
+          },
+          jurisdiction: true
         },
         children: [
           {
@@ -244,7 +246,8 @@ export default [
           nav: {
             icon: "el-icon-bank-card",
             title: "收支"
-          }
+          },
+          jurisdiction: true
         }
       },
       {

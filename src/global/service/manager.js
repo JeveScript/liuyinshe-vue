@@ -8,6 +8,8 @@ const managerService = {
       DataStore.setToken(res.token);
       DataStore.setUser_name(res.userInfo.user_name);
       DataStore.setUser_id(res.userInfo.user_id);
+      DataStore.setUser_status(res.userInfo.user_status);
+
     });
   },
   create: function(params) {

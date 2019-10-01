@@ -7,6 +7,9 @@ const paymentService = {
   },
   list: function(params) {
     return request.get(API.payment, params);
+  },
+  accounts: function(){
+    return request.get(API.accounts);
   }
 };
 

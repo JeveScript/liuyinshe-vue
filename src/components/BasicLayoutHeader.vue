@@ -57,6 +57,7 @@ export default {
         getStore.storage.delete("token");
         getStore.storage.delete("user_name");
         getStore.storage.delete("user_id");
+        getStore.storage.delete("user_status");
         return this.$router.replace({ name: "AccountLogin" });
       }
     }

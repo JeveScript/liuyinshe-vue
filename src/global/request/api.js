@@ -21,10 +21,11 @@ const API = {
   teacher: `${PREFIX}/teacher`,
   teacherShow: id => `${PREFIX}/teacher/${id}`,
   newDateLesson: `${PREFIX}/nowdate/lesson`,
-  userS: `${PREFIX}/userS`,
+  pauper: `${PREFIX}/pauper`,
   qiniuToken: `${PREFIX}/qiniu/token`,
   sms_log: `${PREFIX}/sms_log`,
-  QINIU_API: "https://upload-z2.qiniup.com"
+  QINIU_API: "https://upload-z2.qiniup.com",
+  accounts: `${PREFIX}/accounts`
 };
 
 export default API;

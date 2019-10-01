@@ -17,8 +17,8 @@ const userService = {
   show: function(id) {
     return request.get(API.userItem(id));
   },
-  userS: function() {
-    return request.get(API.userS);
+  pauper: function() {
+    return request.get(API.pauper);
   }
 };
 

@@ -3,6 +3,18 @@
     <v-breadcrumb />
     <div class="page-content" v-loading="loading">
       <div class="mb-20">
+        <el-row :gutter="12" style="margin-bottom:30px;">
+          <el-col :span="12">
+            <el-card shadow="always">
+              当月收入: {{ accounts.income }}
+            </el-card>
+          </el-col>
+          <el-col :span="12">
+            <el-card shadow="always">
+              当月支出:  {{ accounts.expenditure }}
+            </el-card>
+          </el-col>
+        </el-row>
         <el-form label-position="right" inline label-width="80px">
           <el-form-item label="时间：">
             <el-date-picker
@@ -67,6 +79,7 @@ import paymentService from "@/global/service/payment.js";
 export default {
   data() {
     return {
+      accounts:{},
       loading: true,
       tableData: [],
       pagination: {
@@ -113,8 +126,15 @@ export default {
   },
   created() {
     this.getData();
+    this.getAccounts()
   },
   methods: {
+    getAccounts(){
+      paymentService.accounts().then(res => {
+        this.accounts = res
+      }).catch(err => {
+      })
+    },
     getData() {
       let params = {
         current_page: this.pagination.currentPage,

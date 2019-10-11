@@ -97,16 +97,17 @@ export default {
   created() {
     this.getLeaveData();
     this.getNewLsoon();
-    this.getPauper();
+    this.getUser_nomo();
   },
   methods: {
-    getPauper() {
+    getUser_nomo() {
       userService
-        .pauper()
+        .user_nomo()
         .then(res => {
+          console.log(res)
           this.userSdata = res;
         })
-        .catch(e => {});
+        .catch(e => {console.log(e)});
     },
     getNewLsoon() {
       lessonService

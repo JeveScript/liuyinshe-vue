@@ -21,7 +21,7 @@ const API = {
   teacher: `${PREFIX}/teacher`,
   teacherShow: id => `${PREFIX}/teacher/${id}`,
   newDateLesson: `${PREFIX}/nowdate/lesson`,
-  pauper: `${PREFIX}/pauper`,
+  user_nomo: `${PREFIX}/user_nomo`,
   qiniuToken: `${PREFIX}/qiniu/token`,
   sms_log: `${PREFIX}/sms_log`,
   QINIU_API: "https://upload-z2.qiniup.com"

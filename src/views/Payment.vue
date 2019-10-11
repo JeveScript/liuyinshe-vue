@@ -5,11 +5,11 @@
       <div class="mb-20">
         <el-row :gutter="12" style="margin-bottom:30px;">
           <el-col :span="12">
-            <el-card shadow="always"> 当月收入: {{ accounts.income }} </el-card>
+            <el-card shadow="always"> 收入: {{ accounts.income }} </el-card>
           </el-col>
           <el-col :span="12">
             <el-card shadow="always">
-              当月支出: {{ accounts.expenditure }}
+              支出: {{ accounts.expenditure }}
             </el-card>
           </el-col>
         </el-row>

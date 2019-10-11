@@ -67,7 +67,7 @@ export default {
         name: "",
         phone: "",
         password: "",
-        status:""
+        status: ""
       }
     };
   },
@@ -79,7 +79,7 @@ export default {
             name: this.formData.name,
             phone: this.formData.phone,
             password: this.formData.password,
-            status:this.formData.status
+            status: this.formData.status
           };
           this.disabled = true;
           managerService

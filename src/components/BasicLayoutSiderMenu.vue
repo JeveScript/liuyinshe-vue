@@ -48,7 +48,7 @@ export default {
     collapse: {
       type: Boolean,
       default: false,
-      status:null,
+      status: null
     }
   },
   data() {
@@ -75,9 +75,9 @@ export default {
       let status = this.status;
       let result = [];
       node.forEach(data => {
-        if(data.meta && status == 1 && data.meta.jurisdiction == true){
-          return 
-        }else{
+        if (data.meta && status == 1 && data.meta.jurisdiction == true) {
+          return;
+        } else {
           if (data.meta && data.meta.nav) {
             let item = {
               path: data.path,
@@ -94,7 +94,6 @@ export default {
             );
           }
         }
-        
       });
       return result;
     },

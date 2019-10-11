@@ -48,12 +48,12 @@ export default {
       default: ""
     }
   },
-  created(){
+  created() {
     let status = getStore.getUser_status();
     let router = this.$route.matched;
-    if(router[1].meta && status == 1 && router[1].meta.jurisdiction == true){
-            return this.$router.replace({ name: "Dashboard" });
-      } 
+    if (router[1].meta && status == 1 && router[1].meta.jurisdiction == true) {
+      return this.$router.replace({ name: "Dashboard" });
+    }
   },
   computed: {
     breadcrumbValue() {

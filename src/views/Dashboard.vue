@@ -37,7 +37,7 @@
         <el-col :span="12">
           <el-card class="box-card">
             <h3>今日点名课程</h3>
-            <el-table :data="lessonNewDate" style="width: 100%">
+            <el-table :data="lessonNewDate" style="width: 100%" height="800">
               <el-table-column prop="date" label="日期"> </el-table-column>
               <el-table-column prop="name" label="班级"> </el-table-column>
               <el-table-column prop="start_time" label="上课时间">
@@ -59,7 +59,7 @@
         <el-col :span="11" :push="1">
           <el-card class="box-card">
             <h3>提醒用户列表</h3>
-            <el-table :data="userSdata" style="width: 100%">
+            <el-table :data="userSdata" style="width: 100%" height="800">
               <el-table-column prop="name" label="姓名"> </el-table-column>
               <el-table-column prop="phone" label="手机"> </el-table-column>
               <el-table-column prop="balance" label="余额"> </el-table-column>

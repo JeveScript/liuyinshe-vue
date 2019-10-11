@@ -16,8 +16,10 @@
         <el-form-item label="手机号" prop="phone" style="width:460px;">
           <el-input v-model="formData.phone" placeholder="请输入手机号" />
         </el-form-item>
-         <el-form-item label="管理员权限" prop="status" style="width:460px;">
-          <el-radio v-model="formData.status" :label="Number(0)">管理员</el-radio>
+        <el-form-item label="管理员权限" prop="status" style="width:460px;">
+          <el-radio v-model="formData.status" :label="Number(0)"
+            >管理员</el-radio
+          >
           <el-radio v-model="formData.status" :label="Number(1)">前台</el-radio>
         </el-form-item>
         <el-form-item label="密码" prop="password" style="width:460px;">
@@ -68,7 +70,7 @@ export default {
         name: "",
         phone: "",
         password: "",
-        status:""
+        status: ""
       }
     };
   },
@@ -88,7 +90,7 @@ export default {
             name: this.formData.name,
             phone: this.formData.phone,
             password: this.formData.password,
-            status:this.formData.status
+            status: this.formData.status
           };
           this.disabled = true;
           managerService

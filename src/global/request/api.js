@@ -24,8 +24,7 @@ const API = {
   pauper: `${PREFIX}/pauper`,
   qiniuToken: `${PREFIX}/qiniu/token`,
   sms_log: `${PREFIX}/sms_log`,
-  QINIU_API: "https://upload-z2.qiniup.com",
-  accounts: `${PREFIX}/accounts`
+  QINIU_API: "https://upload-z2.qiniup.com"
 };
 
 export default API;

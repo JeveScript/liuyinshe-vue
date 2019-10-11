@@ -5,13 +5,11 @@
       <div class="mb-20">
         <el-row :gutter="12" style="margin-bottom:30px;">
           <el-col :span="12">
-            <el-card shadow="always">
-              当月收入: {{ accounts.income }}
-            </el-card>
+            <el-card shadow="always"> 当月收入: {{ accounts.income }} </el-card>
           </el-col>
           <el-col :span="12">
             <el-card shadow="always">
-              当月支出:  {{ accounts.expenditure }}
+              当月支出: {{ accounts.expenditure }}
             </el-card>
           </el-col>
         </el-row>
@@ -79,7 +77,7 @@ import paymentService from "@/global/service/payment.js";
 export default {
   data() {
     return {
-      accounts:{},
+      accounts: {},
       loading: true,
       tableData: [],
       pagination: {
@@ -126,15 +124,8 @@ export default {
   },
   created() {
     this.getData();
-    this.getAccounts()
   },
   methods: {
-    getAccounts(){
-      paymentService.accounts().then(res => {
-        this.accounts = res
-      }).catch(err => {
-      })
-    },
     getData() {
       let params = {
         current_page: this.pagination.currentPage,
@@ -150,6 +141,8 @@ export default {
       paymentService
         .list(params)
         .then(res => {
+          let { income, expenditure } = res;
+          this.accounts = { income, expenditure };
           this.tableData = res.datas;
           this.pagination.pageSize = Number(res.pagination.page_size);
           this.pagination.currentPage = Number(res.pagination.current_page);

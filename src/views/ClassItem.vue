@@ -108,7 +108,9 @@
           <el-card class="box-card mb-20">
             <div slot="header" class="clearfix">
               <span>课时信息</span>
-              <span style="float: right; padding: 3px 0" type="text">课时: {{lessons.length}}节</span>
+              <span style="float: right; padding: 3px 0" type="text"
+                >课时: {{ lessons.length }}节</span
+              >
             </div>
             <el-table :data="lessons" class="mb-20" style="width: 100%">
               <el-table-column prop="date" label="日期">

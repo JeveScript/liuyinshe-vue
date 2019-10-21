@@ -9,82 +9,148 @@
         label-position="left"
         label-width="160px"
       >
-        <h3>班级信息</h3>
-        <el-form-item label="班级名称" prop="name" style="width:460px;">
-          <el-input v-model="formData.name" placeholder="请输入班级名称" />
-        </el-form-item>
-        <el-form-item label="课程" prop="course_id" style="width:460px;">
-          <el-select v-model="formData.course_id">
-            <el-option
-              v-for="item in courses"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="带课老师" prop="teacher_id" style="width:460px;">
-          <el-select v-model="formData.teacher_id">
-            <el-option
-              v-for="item in teacherData"
-              :key="item.id"
-              :label="item.teacher_name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开始时间" prop="start_at" style="width:460px;">
-          <el-date-picker
-            v-model="formData.start_at"
-            value-format="yyyy-MM-dd"
-            type="date"
-            placeholder="选择日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间" prop="start_at" style="width:460px;">
-          <el-date-picker
-            v-model="formData.end_at"
-            value-format="yyyy-MM-dd"
-            type="date"
-            placeholder="选择日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="课时总数" prop="lesson_count" style="width:460px;">
-          <el-input
-            type="number"
-            v-model="formData.lesson_count"
-            placeholder="请输入课时总数"
-          />
-        </el-form-item>
-        <el-form-item label="价格" prop="price" style="width:460px;">
-          <el-input
-            type="number"
-            v-model="formData.price"
-            placeholder="请输入总价格"
-          />
-        </el-form-item>
-        <el-form-item label="课时单价" style="width:460px;">
-          {{ formData.price / formData.lesson_count || 0 }} 元 / 小节
-        </el-form-item>
-        <el-form-item label="描述" prop="description" style="width:460px;">
-          <el-input
-            type="textarea"
-            :rows="4"
-            v-model="formData.description"
-            placeholder="请输入班级描述"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            s
-            @click="handleCreateManager"
-            :disabled="disabled"
-            >添加</el-button
-          >
-        </el-form-item>
+        <el-row :gutter="20">
+          <el-col :lg="10">
+            <h3>班级信息</h3>
+            <el-form-item label="班级名称" prop="name" style="width:460px;">
+              <el-input v-model="formData.name" placeholder="请输入班级名称" />
+            </el-form-item>
+            <el-form-item label="课程" prop="course_id" style="width:460px;">
+              <el-select v-model="formData.course_id">
+                <el-option
+                  v-for="item in courses"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="带课老师" style="width:460px;">
+              <el-checkbox-group v-model="formData.teacher_id">
+                <el-checkbox
+                  v-for="item in teacherData"
+                  :label="item.id"
+                  :key="item.id"
+                  >{{ item.teacher_name }}</el-checkbox
+                >
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="开始时间" prop="start_at" style="width:460px;">
+              <el-date-picker
+                v-model="formData.start_at"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="结束时间" prop="start_at" style="width:460px;">
+              <el-date-picker
+                v-model="formData.end_at"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              >
+              </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="描述" prop="description" style="width:460px;">
+              <el-input
+                type="textarea"
+                :rows="4"
+                v-model="formData.description"
+                placeholder="请输入班级描述"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                s
+                @click="handleCreateManager"
+                :disabled="disabled"
+                >添加</el-button
+              >
+            </el-form-item>
+          </el-col>
+          <el-col :lg="10">
+            <el-form-item
+              label="课时总数"
+              prop="lesson_count"
+              style="width:460px;"
+            >
+              {{ formData.lesson.length || 0 }} 节
+            </el-form-item>
+            <el-form-item label="新课时节数" style="width:460px;">
+              <el-input
+                type="number"
+                v-model="showLesson_count"
+                placeholder="添加新课时节数"
+              >
+                <el-button slot="append" @click.prevent="addlesson"
+                  >添加</el-button
+                >
+              </el-input>
+              <el-input
+                type="number"
+                v-model="showLesson_price"
+                placeholder="统一价格"
+                style="margin-top:10px;"
+              >
+                <el-button slot="append" @click.prevent="editLesson_price"
+                  >修改</el-button
+                >
+              </el-input>
+              <div
+                style="margin-top: 15px;"
+                v-for="(data, index) in formData.lesson"
+                :key="index"
+              >
+                带课老师:
+                {{
+                  data.teacher_id
+                    ? teacherData.filter(
+                        newdata => newdata.id == data.teacher_id
+                      )[0].teacher_name
+                    : "未指定"
+                }}
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="data.lesson_price"
+                  class="input-with-select"
+                >
+                  <el-select
+                    v-model="data.teacher_id"
+                    slot="prepend"
+                    placeholder="请选择"
+                  >
+                    <el-option
+                      v-for="item in teacherData"
+                      :key="item.id"
+                      :label="item.teacher_name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+
+                  <el-button></el-button>
+                </el-input>
+              </div>
+            </el-form-item>
+            <el-form-item label="课时总价" style="width:460px;">
+              {{
+                formData.lesson.length > 0
+                  ? formData.lesson
+                      .map(data => {
+                        return data.lesson_price;
+                      })
+                      .reduce((a, b) => {
+                        return Number(a) + Number(b);
+                      })
+                  : 0
+              }}
+              元
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </div>
   </div>
@@ -98,6 +164,8 @@ import teacherService from "@/global/service/teacher.js";
 export default {
   data() {
     return {
+      showLesson_price: "",
+      showLesson_count: null,
       disabled: false,
       loading: false,
       courses: [],
@@ -106,19 +174,12 @@ export default {
         course_id: [
           { required: true, message: "请输入关联课程", trigger: "blur" }
         ],
-        teacher_id: [
-          { required: true, message: "请输入带课老师", trigger: "blur" }
-        ],
         start_at: [
           { required: true, message: "请输入开始时间", trigger: "blur" }
         ],
         end_at: [
           { required: true, message: "请输入结束时间", trigger: "blur" }
         ],
-        lesson_count: [
-          { required: true, message: "请输入课时总数", trigger: "blur" }
-        ],
-        price: [{ required: true, message: "请输入班级总价", trigger: "blur" }],
         description: [
           { required: true, message: "请输入班级描述", trigger: "blur" }
         ]
@@ -128,10 +189,9 @@ export default {
         start_at: "",
         course_id: "",
         end_at: "",
-        lesson_count: "",
-        price: "",
+        lesson: [],
         description: "",
-        teacher_id: ""
+        teacher_id: []
       },
       teacherData: []
     };
@@ -154,7 +214,29 @@ export default {
         this.courses = res;
       });
     },
+    addlesson() {
+      let lesson = [];
+      for (var i = 0; i < Number(this.showLesson_count); i++) {
+        lesson.push({ lesson_price: "", teacher_id: "" });
+      }
+      this.formData.lesson = lesson;
+      this.showLesson_count = "";
+    },
+    editLesson_price() {
+      let showLesson_price = this.showLesson_price;
+      if (showLesson_price)
+        this.formData.lesson.forEach(
+          item => (item.lesson_price = showLesson_price)
+        );
+      this.showLesson_price = "";
+    },
     handleCreateManager() {
+      if (this.formData.teacher_id <= 0) return this.$message("请选择带课老师");
+      if (this.formData.lesson.length <= 0) {
+        return this.$message("请添加课时");
+      }
+      let priceSome = this.formData.lesson.some(data => !data.lesson_price);
+      if (priceSome) return this.$message("输入课时价格");
       this.$refs.classForm.validate(valid => {
         if (valid) {
           let params = {
@@ -162,8 +244,7 @@ export default {
             start_at: this.formData.start_at,
             end_at: this.formData.end_at,
             course_id: this.formData.course_id,
-            lesson_count: this.formData.lesson_count,
-            price: this.formData.price,
+            lesson: this.formData.lesson,
             description: this.formData.description,
             teacher_id: this.formData.teacher_id
           };

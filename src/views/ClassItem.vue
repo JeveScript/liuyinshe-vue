@@ -66,14 +66,12 @@
                 prop="teacher_name"
                 style="width:460px;"
               >
-                {{ formData.teacher_name }}
-              </el-form-item>
-              <el-form-item
-                label="手机号码"
-                prop="teacher_phone"
-                style="width:460px;"
-              >
-                {{ formData.teacher_phone }}
+                <span
+                  style="margin-right:20px;"
+                  v-for="item in teacherData"
+                  :key="item.id"
+                  >{{ item.teacher_name }}</span
+                >
               </el-form-item>
               <el-form-item label="状态" prop="status" style="width:460px;">
                 {{
@@ -113,6 +111,11 @@
               >
             </div>
             <el-table :data="lessons" class="mb-20" style="width: 100%">
+              <el-table-column prop="date" label="带课老师">
+                <template slot-scope="scope">
+                  {{ scope.row.teacher_name || "未指定" }}
+                </template>
+              </el-table-column>
               <el-table-column prop="date" label="日期">
                 <template slot-scope="scope">
                   {{ scope.row.date || "-" }}
@@ -158,7 +161,8 @@ export default {
       users: [],
       formData: {},
       user_id: "",
-      searchUsers: []
+      searchUsers: [],
+      teacherData: []
     };
   },
   computed: {
@@ -176,6 +180,7 @@ export default {
         this.formData = res.class;
         this.lessons = res.lessons;
         this.users = res.users;
+        this.teacherData = res.teacherData;
       });
     },
     linkClassEdit() {

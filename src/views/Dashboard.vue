@@ -1,73 +1,68 @@
 <template>
   <div class="page-container">
     <div class="page-content">
-      <el-card class="box-card">
-        <h3>请假列表</h3>
-        <el-table class="mb-20" :data="leaveData" style="width: 100%">
-          <el-table-column prop="user_name" label="姓名"> </el-table-column>
-          <el-table-column prop="name" label="班级名称"> </el-table-column>
-          <el-table-column prop="date" label="请假日期"> </el-table-column>
-          <el-table-column prop="start_time" label="上课时间">
-          </el-table-column>
-          <el-table-column label="类型">
-            <template slot-scope="scope">
-              <el-tag v-if="!scope.row.status" type="info">未处理</el-tag>
-              <el-tag v-if="scope.row.status === 1" type="primary"
-                >已确认</el-tag
-              >
-              <el-tag v-if="scope.row.status === 2" type="success"
-                >已补课</el-tag
-              >
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                type="primary"
-                plain
-                @click="handleChangeStatus(scope.row, scope.$index, 1)"
-                v-if="!scope.row.status"
-                >确认</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-card>
-      <el-row style="margin-top:30px;">
-        <el-col :span="12">
-          <el-card class="box-card">
-            <h3>今日点名课程</h3>
-            <el-table :data="lessonNewDate" style="width: 100%" height="800">
-              <el-table-column prop="date" label="日期"> </el-table-column>
-              <el-table-column prop="name" label="班级"> </el-table-column>
-              <el-table-column prop="start_time" label="上课时间">
-              </el-table-column>
-              <el-table-column prop="end_time" label="下课时间">
-              </el-table-column>
-              <el-table-column label="点名">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    @click="linkEditSubmit(scope.$index, scope.row)"
-                    >点名</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-card>
-        </el-col>
-        <el-col :span="11" :push="1">
-          <el-card class="box-card">
-            <h3>提醒用户列表</h3>
-            <el-table :data="userSdata" style="width: 100%" height="800">
-              <el-table-column prop="name" label="姓名"> </el-table-column>
-              <el-table-column prop="phone" label="手机"> </el-table-column>
-              <el-table-column prop="balance" label="余额"> </el-table-column>
-            </el-table>
-          </el-card>
-        </el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      </el-row>
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="请假列表" :name="Number(1)">
+          <h3>请假列表</h3>
+          <el-table class="mb-20" :data="leaveData" style="width: 100%">
+            <el-table-column prop="user_name" label="姓名"> </el-table-column>
+            <el-table-column prop="name" label="班级名称"> </el-table-column>
+            <el-table-column prop="date" label="请假日期"> </el-table-column>
+            <el-table-column prop="start_time" label="上课时间">
+            </el-table-column>
+            <el-table-column label="类型">
+              <template slot-scope="scope">
+                <el-tag v-if="!scope.row.status" type="info">未处理</el-tag>
+                <el-tag v-if="scope.row.status === 1" type="primary"
+                  >已确认</el-tag
+                >
+                <el-tag v-if="scope.row.status === 2" type="success"
+                  >已补课</el-tag
+                >
+              </template>
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  type="primary"
+                  plain
+                  @click="handleChangeStatus(scope.row, scope.$index, 1)"
+                  v-if="!scope.row.status"
+                  >确认</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="今日点名课程" :name="Number(2)">
+          <h3>今日点名课程</h3>
+          <el-table :data="lessonNewDate" style="width: 100%">
+            <el-table-column prop="date" label="日期"> </el-table-column>
+            <el-table-column prop="name" label="班级"> </el-table-column>
+            <el-table-column prop="start_time" label="上课时间">
+            </el-table-column>
+            <el-table-column prop="end_time" label="下课时间">
+            </el-table-column>
+            <el-table-column label="点名">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  @click="linkEditSubmit(scope.$index, scope.row)"
+                  >点名</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="提醒用户列表" :name="Number(3)">
+          <h3>提醒用户列表</h3>
+          <el-table :data="userSdata" style="width: 100%">
+            <el-table-column prop="name" label="姓名"> </el-table-column>
+            <el-table-column prop="phone" label="手机"> </el-table-column>
+            <el-table-column prop="balance" label="余额"> </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -79,6 +74,7 @@ import userService from "@/global/service/user.js";
 export default {
   data() {
     return {
+      activeName: 1,
       loading: true,
       tableData: [],
       leaveData: [],
@@ -104,10 +100,11 @@ export default {
       userService
         .user_nomo()
         .then(res => {
-          console.log(res)
           this.userSdata = res;
         })
-        .catch(e => {console.log(e)});
+        .catch(e => {
+          console.log(e);
+        });
     },
     getNewLsoon() {
       lessonService

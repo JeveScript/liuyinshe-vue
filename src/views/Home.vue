@@ -140,7 +140,8 @@
     </div>
     <footer class="footer-container">
       <p class="footer-title">
-        广东留音社:中华人民共和国广东省广州市增城区
+        地址:
+        广州市增城区荔城街民乐路18号汇港豪庭首层12号留音社（即阳光国际大厦东门对面）
       </p>
     </footer>
   </div>

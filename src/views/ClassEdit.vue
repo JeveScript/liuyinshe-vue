@@ -32,19 +32,15 @@
                 <el-option :label="'已结束'" :value="2"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="带课老师"
-              prop="teacher_id"
-              style="width:460px;"
-            >
-              <el-select v-model="formData.teacher_id">
-                <el-option
+            <el-form-item label="带课老师" style="width:460px;">
+              <el-checkbox-group v-model="nowTeacher_id">
+                <el-checkbox
                   v-for="item in teacherData"
+                  :label="Number(item.id)"
                   :key="item.id"
-                  :label="item.teacher_name"
-                  :value="item.id"
-                />
-              </el-select>
+                  >{{ item.teacher_name }}</el-checkbox
+                >
+              </el-checkbox-group>
             </el-form-item>
             <el-form-item label="开始时间" prop="start_at" style="width:460px;">
               <el-date-picker
@@ -86,6 +82,17 @@
         <el-col :lg="12">
           <h3>课时信息</h3>
           <el-table :data="lessons" class="mb-20" style="width: 100%">
+            <el-table-column prop="date" label="带课老师">
+              <template slot-scope="scope">
+                {{
+                  scope.row.teacher_id
+                    ? teacherData.filter(
+                        newdata => newdata.id == scope.row.teacher_id
+                      )[0]["teacher_name"]
+                    : "未指定"
+                }}
+              </template>
+            </el-table-column>
             <el-table-column prop="date" label="日期">
               <template slot-scope="scope">
                 {{ scope.row.date || "-" }}
@@ -128,19 +135,30 @@
           ref="classForm"
           label-position="left"
         >
-          <el-form-item label="开始时间" prop="date">
+          <el-form-item label="带课老师" prop="date">
+            <el-select v-model="lessonDatas.teacher_id" placeholder="请选择">
+              <el-option
+                v-for="item in teacherData"
+                :key="item.id"
+                :label="item.teacher_name"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开始日期" prop="date">
             <el-date-picker
               v-model="lessonDatas.date"
               value-format="yyyy-MM-dd"
               type="date"
-              placeholder="选择开始时间"
+              placeholder="选择开始日期"
             >
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="开始时间" prop="start_time">
+          <el-form-item label="上课时间" prop="start_time">
             <el-time-select
               class="start_time"
-              placeholder="开始时间"
+              placeholder="上课时间"
               v-model="lessonDatas.start_time"
               :picker-options="{
                 start: '08:30',
@@ -152,10 +170,10 @@
             </el-time-select>
           </el-form-item>
 
-          <el-form-item label="结束时间" prop="end_time">
+          <el-form-item label="下课时间" prop="end_time">
             <el-time-select
               class="end_time"
-              placeholder="结束时间"
+              placeholder="下课时间"
               v-model="lessonDatas.end_time"
               :picker-options="{
                 start: '08:30',
@@ -198,9 +216,7 @@ export default {
         course_id: [
           { required: true, message: "请输入关联课程", trigger: "blur" }
         ],
-        teacher_id: [
-          { required: true, message: "请输入带课老师", trigger: "blur" }
-        ],
+
         start_at: [
           { required: true, message: "请输入开始时间", trigger: "blur" }
         ],
@@ -212,11 +228,12 @@ export default {
           { required: true, message: "请输入班级描述", trigger: "blur" }
         ]
       },
+      nowTeacher_id: [],
       formData: {
         name: "",
         start_at: "",
         course_id: "",
-        teacher_id: "",
+        teacher_id: [],
         end_at: "",
         lesson_count: "",
         price: "",
@@ -225,7 +242,8 @@ export default {
       lessonDatas: {
         date: "",
         start_time: "",
-        end_time: ""
+        end_time: "",
+        teacher_id: ""
       },
       LessonRules: {
         date: [{ required: true, message: "请输入课时日期", trigger: "blur" }],
@@ -257,6 +275,7 @@ export default {
       classService.show(id).then(res => {
         this.formData = res.class;
         this.lessons = res.lessons;
+        this.nowTeacher_id = res.teacher;
       });
     },
     getCourse() {
@@ -265,6 +284,7 @@ export default {
       });
     },
     handleEdit() {
+      this.formData.teacher_id = this.nowTeacher_id;
       this.$refs.classForm.validate(valid => {
         if (valid) {
           let params = {
@@ -310,6 +330,9 @@ export default {
         this.lessons[
           this.selectLessonIndex
         ].end_time = this.lessonDatas.end_time;
+        this.lessons[
+          this.selectLessonIndex
+        ].teacher_id = this.lessonDatas.teacher_id;
         this.dialogVisible = false;
       });
     }

@@ -236,7 +236,10 @@ export default {
         return this.$message("请添加课时");
       }
       let priceSome = this.formData.lesson.some(data => !data.lesson_price);
+      let teacherSome = this.formData.lesson.some(data => !data.teacher_id);
       if (priceSome) return this.$message("输入课时价格");
+      if (teacherSome) return this.$message("请选择带课老师");
+
       this.$refs.classForm.validate(valid => {
         if (valid) {
           let params = {

@@ -85,11 +85,7 @@
             <el-table-column prop="date" label="带课老师">
               <template slot-scope="scope">
                 {{
-                  scope.row.teacher_id
-                    ? teacherData.filter(
-                        newdata => newdata.id == scope.row.teacher_id
-                      )[0]["teacher_name"]
-                    : "未指定"
+                  scope.row.teacher_name || "未指定"
                 }}
               </template>
             </el-table-column>
@@ -273,6 +269,7 @@ export default {
     getClassInfo() {
       let id = this.$route.params.id;
       classService.show(id).then(res => {
+        console.log(res)
         this.formData = res.class;
         this.lessons = res.lessons;
         this.nowTeacher_id = res.teacher;

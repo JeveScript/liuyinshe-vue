@@ -2,7 +2,7 @@ import { Message } from 'element-ui'
 import DataStore from '@/global/storage/index'
 import axios from 'axios'
 axios.defaults.Baseurl = true
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 axios.defaults.timeout = 20000
 
 // 添加一个请求拦截器（ 一般用于鉴权 )

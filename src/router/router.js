@@ -5,7 +5,7 @@ import BasicLayout from '@/components/BasicLayout.vue'
 const login = () =>
   import(/* webpackChunkName: "account" */ '@/views/login.vue')
 const home = () =>
-  import(/* webpackChunkName: "account" */ '@/views/home.vue')
+  import(/* webpackChunkName: "account" */ '@/views/Home.vue')
 const manager = () =>
   import(/* webpackChunkName: "account" */ '@/views/manager.vue')
 const managerCreate = () =>

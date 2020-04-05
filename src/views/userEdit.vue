@@ -69,7 +69,7 @@
             :rules="[
               { required: true, message: '请输入有效数值', trigger: 'blur' },
               {
-                pattern: /^[1-9]\d*\,\d*|[1-9]\d*$/,
+                pattern: /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/,
                 message: '金额必须为数字值',
                 trigger: 'blur'
               }

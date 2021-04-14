@@ -29,7 +29,7 @@ export default {
   methods: {
     getAside: function () {
       let status = DataStore.getManagerStatus()
-      let data = router[2].children
+      let data = router[1].children
       let routerArr = []
       data.forEach(item => {
         let zhi = {}

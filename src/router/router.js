@@ -4,8 +4,8 @@ import BasicLayout from '@/components/BasicLayout.vue'
 //   import(/* webpackChunkName: "account" */ '@/views/homepage.vue')
 const login = () =>
   import(/* webpackChunkName: "account" */ '@/views/login.vue')
-const home = () =>
-  import(/* webpackChunkName: "account" */ '@/views/Home.vue')
+// const home = () =>
+//   import(/* webpackChunkName: "account" */ '@/views/Home.vue')
 const manager = () =>
   import(/* webpackChunkName: "account" */ '@/views/manager.vue')
 const managerCreate = () =>
@@ -50,25 +50,20 @@ const payment = () =>
   import(/* webpackChunkName: "account" */ '@/views/payment.vue')
 const course = () =>
   import(/* webpackChunkName: "account" */ '@/views/course.vue')
-
 export default [
-  {
-    path: '/',
-    name: 'home',
-    component: home
-  },
   {
     path: '/login',
     name: 'login',
     component: login
   },
   {
-    path: '/admin',
+    path: '/',
     name: 'Admin',
     component: BasicLayout,
+    redirect: { name: 'manager' },
     children: [
       // {
-      //   path: '/admin',
+      //   path: '/',
       //   name: 'homepage',
       //   component: homepage,
       //   meta: {
